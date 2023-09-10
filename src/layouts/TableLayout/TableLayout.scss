@@ -1,0 +1,53 @@
+.gridTable {
+    border-spacing: 0;
+    &__scaled_2 {
+        transform: scale(2);
+    }
+    input {
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+        padding: 0;
+    }
+    td {
+        width: 24px;
+        padding: 0;
+    }
+
+    td:nth-child(odd) {
+        width: 12px;
+        background-color: #ffe7e7;
+        & > input {
+            width: 10px;
+        }
+    }
+    td:nth-child(even) {
+        background-color: #ffd7d7;
+        & > input {
+            width: 24px;
+            text-align: center;
+            font-size: 24px;
+            border: none;
+        }
+    }
+    tr {
+        height: 32px;
+        &:nth-child(odd) {
+            height: 12px;
+            & > td {
+                height: 12px;
+            }
+            & > td:nth-child(even) {
+                background-color: #ffe7e7;
+            }
+            & > td:nth-child(odd) {
+                background-color: #ffffff;
+            }
+            & input {
+                width: 10px;
+                height: 12px;
+                border: none;
+                background-color: rgba(0, 0, 0, 0);
+            }
+        }
+    }
+}

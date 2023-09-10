@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import TableLayout from "../layouts/TableLayout";
 
-const App =()=> {
-  return (
-    <div className="App">
-      hi!!!!
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <>
+            <TableLayout />
+        </>
+    );
+};
 
 export default App;
