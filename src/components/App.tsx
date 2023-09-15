@@ -1,10 +1,10 @@
 import React from "react";
-import TemplatesPage from "../pages/TemplatesPage";
+import MainPageLayout from "../layouts/MainPageLayout";
 
 const App = () => {
     return (
         <>
-            <TemplatesPage />
+            <MainPageLayout />
         </>
     );
 };

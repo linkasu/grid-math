@@ -1,29 +1,31 @@
 import React, { ReactElement, useState } from "react";
-import "./TemplatesLayout.scss";
+import "./OperationsLayout.scss";
 import TemplateContainer from "../../components/TemplateContainer";
 
-interface ITemplateLayoutProps {
+interface IOperationsLayoutProps {
     layoutTitle: string;
     template: ReactElement;
     templateWidth: 25 | 50;
 }
 
-const TemplatesLayout = (props: ITemplateLayoutProps) => {
+const OperationsLayout = (props: IOperationsLayoutProps) => {
     const { layoutTitle, template, templateWidth } = props;
     const [templatesCount, setTemplatesCount] = useState(1);
     const increaseTemplateCount = () => setTemplatesCount((prev) => prev + 1);
     const decreaseTemplateCount = () => setTemplatesCount((prev) => prev - 1);
     return (
-        <div className="templates-layout">
-            <div className="templates-layout__header">
+        <div className="operations-layout">
+            <div className="operations-layout__header">
                 <h2>{layoutTitle}</h2>
-                <button onClick={increaseTemplateCount}>Попробовать еще</button>
+                <button onClick={increaseTemplateCount} className="operations-layout__add-template">
+                    Попробовать еще
+                </button>
             </div>
-            <div className="templates-layout__content">
+            <div className="operations-layout__templates">
                 {[...Array(templatesCount)].map((e, i) => (
                     <TemplateContainer
                         onRemoveTemplate={decreaseTemplateCount}
-                        canRemoveTemplate={i>0}
+                        canRemoveTemplate={i > 0}
                         key={i}
                         template={template}
                         templateWidth={templateWidth}
@@ -34,4 +36,4 @@ const TemplatesLayout = (props: ITemplateLayoutProps) => {
     );
 };
 
-export default TemplatesLayout;
+export default OperationsLayout;

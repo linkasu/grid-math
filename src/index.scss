@@ -1,3 +1,14 @@
-h1 {
-    color:red
+@import "./styles/colors.scss";
+
+html {
+    color: $fontBlack;
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+h2 {
+    margin: 0;
 }
