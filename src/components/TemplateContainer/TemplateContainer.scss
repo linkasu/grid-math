@@ -2,11 +2,10 @@
 
 .template {
     &__container {
-        border: 1px solid #333333;
         box-sizing: border-box;
         width: 25%;
         position: relative;
-        padding: 1rem;
+        padding: 0.5rem;
         margin-bottom: 1.5rem;
         &_devision {
             width: 50%;

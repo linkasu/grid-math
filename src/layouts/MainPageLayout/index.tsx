@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import "./MainPageLayout.scss";
 import OperationsLayout from "../OperationsLayout";
+import Template from "../../components/Template";
 
 export type Operation = {
     name: string;
@@ -8,15 +9,32 @@ export type Operation = {
     templateWidth: 25 | 50;
 };
 
+export const MAX_DIGIT_NUMBER = 5;
+export const MAX_CALCULATION_ROWS = 2;
+export const MAX_MULTIPLICATION_DIGIT_NUMBER = 3;
+export const MAX_MULTIPLICATION_CALCULATION_ROWS = 3;
+
 const operations: Operation[] = [
     {
         name: "Сложение",
-        template: <div>Plus</div>,
+        template: (
+            <Template
+                operation="addition"
+                digitsInRow={MAX_DIGIT_NUMBER}
+                calculationRowsCount={MAX_CALCULATION_ROWS}
+            />
+        ),
         templateWidth: 25,
     },
     {
         name: "Вычитание",
-        template: <div>Minus</div>,
+        template: (
+            <Template
+                operation="subtraction"
+                digitsInRow={MAX_DIGIT_NUMBER}
+                calculationRowsCount={MAX_CALCULATION_ROWS}
+            />
+        ),
         templateWidth: 25,
     },
     {
