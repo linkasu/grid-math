@@ -21,6 +21,9 @@
         border-radius: $radius;
         box-shadow: 0px 4px 0px $secondaryDarkBlue;
         padding: 1rem 1.25rem;
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &__templates {

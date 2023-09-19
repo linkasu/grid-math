@@ -1,50 +1,46 @@
 import React, { ReactElement } from "react";
 import "./MainPageLayout.scss";
 import OperationsLayout from "../OperationsLayout";
-import Template from "../../components/Template";
+import AdditionTemplate from "../../components/AdditionTemplate";
+import SubtractionTemplate from "../../components/SubtractionTemplate";
+import MultiplicationTemplate from "../../components/MultiplicationTemplate";
+import { OperationType } from "../../components/BasicCalculationTemplate";
+import DivisionTemplate from "../../components/DivisionTemplate";
 
 export type Operation = {
-    name: string;
+    name: OperationType;
+    title: string;
     template: ReactElement;
     templateWidth: 25 | 50;
 };
 
-export const MAX_DIGIT_NUMBER = 5;
+export const CALCULATED_NUMBERS_COUNT = 2;
 export const MAX_CALCULATION_ROWS = 2;
-export const MAX_MULTIPLICATION_DIGIT_NUMBER = 3;
 export const MAX_MULTIPLICATION_CALCULATION_ROWS = 3;
 
 const operations: Operation[] = [
     {
-        name: "Сложение",
-        template: (
-            <Template
-                operation="addition"
-                digitsInRow={MAX_DIGIT_NUMBER}
-                calculationRowsCount={MAX_CALCULATION_ROWS}
-            />
-        ),
+        name: "addition",
+        title: "Сложение",
+        template: <AdditionTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
         templateWidth: 25,
     },
     {
-        name: "Вычитание",
-        template: (
-            <Template
-                operation="subtraction"
-                digitsInRow={MAX_DIGIT_NUMBER}
-                calculationRowsCount={MAX_CALCULATION_ROWS}
-            />
-        ),
+        name: "subtraction",
+        title: "Вычитание",
+        template: <SubtractionTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
         templateWidth: 25,
     },
     {
-        name: "Умножение",
-        template: <div>Multiply</div>,
+        name: "multiplication",
+        title: "Умножение",
+        template: <MultiplicationTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
         templateWidth: 25,
     },
     {
-        name: "Деление",
-        template: <div>Divide</div>,
+        name: "division",
+        title: "Деление",
+        template: <DivisionTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
         templateWidth: 50,
     },
 ];
@@ -54,7 +50,8 @@ const MainPageLayout = () => (
         {operations.map((operation, i) => (
             <section key={i}>
                 <OperationsLayout
-                    layoutTitle={operation.name}
+                    operationType={operation.name}
+                    layoutTitle={operation.title}
                     template={operation.template}
                     templateWidth={operation.templateWidth}
                 />

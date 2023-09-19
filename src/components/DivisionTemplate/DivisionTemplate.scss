@@ -1,0 +1,22 @@
+@import "../../styles/colors.scss";
+@import "../../styles/variables.scss";
+
+.template{
+    &__division {
+        display: flex;
+        &-right-side {
+            display: flex;
+            flex-direction: column;
+            border-left: 4px solid $fontBlack;
+            padding-left: 1rem;
+            margin-left: 1rem;
+            padding-top: 26px;
+        }
+        &-divide-line {
+            margin: 10px 0 1rem -1rem;
+            background-color: $fontBlack;
+            height: 0.25rem;
+            width: calc(100% + 1rem);
+        }
+    }
+}

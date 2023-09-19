@@ -1,0 +1,17 @@
+@import "../../styles/colors.scss";
+@import "../../styles/variables.scss";
+
+.template {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    &__calculation {
+        position: relative;
+    }
+    &__symbol {
+        position: absolute;
+        top: 56px;
+        left: 0;
+        transform: translate(50%, 0);
+    }
+}
