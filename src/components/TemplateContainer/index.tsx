@@ -4,16 +4,19 @@ import "./TemplateContainer.scss";
 
 interface ITemplateContainerProps {
     template: ReactElement;
-    templateWidth: 25 | 50;
+    templateWidth: TemplateWidth;
     canRemoveTemplate: boolean;
     onRemoveTemplate: () => void;
 }
+
+export type TemplateWidth = 25 | 33 | 50;
 
 const TemplateContainer = (props: ITemplateContainerProps) => {
     const { template, templateWidth, canRemoveTemplate, onRemoveTemplate } = props;
     return (
         <div
             className={classNames("template__container", {
+                ["template__container_multiplication"]: templateWidth === 33,
                 ["template__container_devision"]: templateWidth === 50,
             })}
         >

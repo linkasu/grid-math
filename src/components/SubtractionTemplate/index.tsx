@@ -12,7 +12,7 @@ const SubtractionTemplate = (props: ISubtractionTemplateProps) => {
     const { calculatedNumbersCount } = props;
 
     return (
-        <div className="template">
+        <div className="template template_subtraction">
             <BasicCalculationTemplate
                 calculatedNumbersCount={calculatedNumbersCount}
                 operation={"subtraction"}

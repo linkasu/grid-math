@@ -2,16 +2,25 @@
 @import "../../styles/variables.scss";
 
 .template {
-    width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    &_subtraction {
+        margin-left: 2.5rem;
+    }
     &__calculation {
         position: relative;
+        &_helper {
+            width: 50%;
+        }
     }
     &__symbol {
         position: absolute;
         top: 56px;
         left: 0;
-        transform: translate(50%, 0);
+        transform: translate(calc(-100% - 1rem), 0);
+        &_helper-plus {
+            transform: translate(50%, 0);
+        }
     }
 }

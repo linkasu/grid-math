@@ -14,6 +14,14 @@
         margin-bottom: 4rem;
     }
 
+    &__title {
+        display: flex;
+        align-items: center;
+        & > h2 {
+            margin-right: 1rem;
+        }
+    }
+
     &__add-template {
         color: $fontWhite;
         background-color: $primaryBlue;

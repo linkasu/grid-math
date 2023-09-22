@@ -1,12 +1,13 @@
 import React, { ReactElement, useState } from "react";
 import "./OperationsLayout.scss";
-import TemplateContainer from "../../components/TemplateContainer";
+import TemplateContainer, { TemplateWidth } from "../../components/TemplateContainer";
 import { OperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
+import classNames from "classnames";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
     template: ReactElement;
-    templateWidth: 25 | 50;
+    templateWidth: TemplateWidth;
     operationType: OperationType;
 }
 
@@ -16,9 +17,11 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
     const increaseTemplateCount = () => setTemplatesCount((prev) => prev + 1);
     const decreaseTemplateCount = () => setTemplatesCount((prev) => prev - 1);
     return (
-        <div className="operations-layout">
+        <div className={classNames("operations-layout")}>
             <div className="operations-layout__header">
-                <h2>{layoutTitle}</h2> {getTemplateSymbol(operationType)}
+                <span className="operations-layout__title">
+                    <h2>{layoutTitle}</h2> {getTemplateSymbol(operationType)}
+                </span>
                 <button onClick={increaseTemplateCount} className="operations-layout__add-template">
                     Попробовать еще
                 </button>

@@ -4,6 +4,7 @@
 .template{
     &__division {
         display: flex;
+        margin-left: 2.5rem;
         &-right-side {
             display: flex;
             flex-direction: column;
