@@ -11,9 +11,17 @@ interface IOperationsLayoutProps {
 
 const OperationsLayout = (props: IOperationsLayoutProps) => {
     const { layoutTitle, template, operationType } = props;
-    const [templatesCount, setTemplatesCount] = useState(1);
-    const increaseTemplateCount = () => setTemplatesCount((prev) => prev + 1);
-    const decreaseTemplateCount = () => setTemplatesCount((prev) => prev - 1);
+    const [templatesIds, setTemplatesIds] = useState([`${operationType}-0`]);
+    const increaseTemplateCount = () => setTemplatesIds((prev) => [...prev, createNewId()]);
+    const createNewId = (): string => {
+        const idsCount = templatesIds.length;
+        const dividerIndex = templatesIds[idsCount - 1].indexOf("-");
+        const lastIdNumber = Number(templatesIds[idsCount - 1].slice(dividerIndex + 1)) + 1;
+        return `${operationType}-${lastIdNumber}`;
+    };
+    const decreaseTemplateCount = (id: string) =>
+        setTemplatesIds((prev) => prev.filter((templateId) => templateId !== id));
+
     return (
         <div className="operations-layout">
             <div className="operations-layout__header container">
@@ -25,14 +33,15 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                 </button>
             </div>
             <div className="operations-layout__templates container">
-                {[...Array(templatesCount)].map((e, i) => (
+                {templatesIds.map((id, index) => (
                     <TemplateContainer
                         onRemoveTemplate={decreaseTemplateCount}
-                        canRemoveTemplate={i > 0}
-                        key={i}
+                        canRemoveTemplate={index > 0}
+                        id={id}
+                        key={id}
                         template={template}
                         operation={operationType}
-                    ></TemplateContainer>
+                    />
                 ))}
             </div>
         </div>

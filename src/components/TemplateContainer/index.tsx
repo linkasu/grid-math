@@ -6,13 +6,15 @@ import DeleteIcon from "../../icons/DeleteIcon";
 
 interface ITemplateContainerProps {
     template: ReactElement;
+    id: string;
     operation: OperationType;
     canRemoveTemplate: boolean;
-    onRemoveTemplate: () => void;
+    onRemoveTemplate: (id: string) => void;
 }
 
 const TemplateContainer = (props: ITemplateContainerProps) => {
-    const { template, operation, canRemoveTemplate, onRemoveTemplate } = props;
+    const { template, operation, canRemoveTemplate, onRemoveTemplate, id } = props;
+    const onClickRemove = () => onRemoveTemplate(id);
     return (
         <div
             className={classNames("template__container", {
@@ -26,7 +28,7 @@ const TemplateContainer = (props: ITemplateContainerProps) => {
             {canRemoveTemplate && (
                 <button
                     value="Удалить шаблон"
-                    onClick={onRemoveTemplate}
+                    onClick={onClickRemove}
                     className="template__remove-button"
                 >
                     <DeleteIcon />
