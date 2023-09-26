@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import classNames from "classnames";
 import "./TemplateContainer.scss";
 import { OperationType } from "../BasicCalculationTemplate";
+import DeleteIcon from "../../icons/DeleteIcon";
 
 interface ITemplateContainerProps {
     template: ReactElement;
@@ -9,8 +10,6 @@ interface ITemplateContainerProps {
     canRemoveTemplate: boolean;
     onRemoveTemplate: () => void;
 }
-
-export type TemplateWidth = 25 | 33 | 50;
 
 const TemplateContainer = (props: ITemplateContainerProps) => {
     const { template, operation, canRemoveTemplate, onRemoveTemplate } = props;
@@ -23,12 +22,16 @@ const TemplateContainer = (props: ITemplateContainerProps) => {
                 "col-xl-6 col-lg-12": operation === "division",
             })}
         >
+            {template}
             {canRemoveTemplate && (
-                <button onClick={onRemoveTemplate} className="template__remove-button">
-                    x
+                <button
+                    value="Удалить шаблон"
+                    onClick={onRemoveTemplate}
+                    className="template__remove-button"
+                >
+                    <DeleteIcon />
                 </button>
             )}
-            {template}
         </div>
     );
 };

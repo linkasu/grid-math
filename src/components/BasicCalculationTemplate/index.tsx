@@ -34,11 +34,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
     const isHelperAddition = isHelperCalculation && operation === "addition";
 
     return (
-        <div
-            className={classNames("template__calculation", {
-                //["template__calculation_helper"]: operation === "multiplication",
-            })}
-        >
+        <div className="template__calculation">
             {[...Array(calculatedNumbersCount)].map((e, i) => (
                 <>
                     {(i === 0 || isHelperCalculation) && (
@@ -51,7 +47,9 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                     <CalculationRow
                         digitsInRow={digitsInRow}
                         rowType={"calculation"}
-                        className={classNames({ ["row_last"]: i + 1 === calculatedNumbersCount })}
+                        className={classNames({
+                            ["calculationRow_last"]: i + 1 === calculatedNumbersCount,
+                        })}
                         offsetCells={isHelperAddition ? i : 0}
                     />
                     {i === 0 && (

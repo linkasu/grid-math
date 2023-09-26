@@ -1,17 +1,16 @@
 import React, { ReactElement, useState } from "react";
 import "./OperationsLayout.scss";
-import TemplateContainer, { TemplateWidth } from "../../components/TemplateContainer";
+import TemplateContainer from "../../components/TemplateContainer";
 import { OperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
     template: ReactElement;
-    templateWidth: TemplateWidth;
     operationType: OperationType;
 }
 
 const OperationsLayout = (props: IOperationsLayoutProps) => {
-    const { layoutTitle, template, templateWidth, operationType } = props;
+    const { layoutTitle, template, operationType } = props;
     const [templatesCount, setTemplatesCount] = useState(1);
     const increaseTemplateCount = () => setTemplatesCount((prev) => prev + 1);
     const decreaseTemplateCount = () => setTemplatesCount((prev) => prev - 1);
