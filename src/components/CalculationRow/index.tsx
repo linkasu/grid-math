@@ -30,7 +30,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
                         ["row__cell_result"]: rowType === "result",
                         ["row__cell_offset"]:
                             (i >= rowCellsCount - offsetCells && offsetCells !== 0) ||
-                            (i === rowCellsCount - 1 && rowType === "helper"),
+                            (i === rowCellsCount && rowType === "helper"),
                     })}
                     key={i}
                 />

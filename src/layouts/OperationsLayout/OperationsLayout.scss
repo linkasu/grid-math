@@ -26,9 +26,9 @@
         color: $fontWhite;
         background-color: $primaryBlue;
         border: none;
-        border-radius: $radius;
+        border-radius: $buttonRadius;
         box-shadow: 0px 4px 0px $secondaryDarkBlue;
-        padding: 1rem 1.25rem;
+        padding: 1rem;
         &:hover {
             cursor: pointer;
         }
