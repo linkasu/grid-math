@@ -22,6 +22,8 @@
     }
 
     &__add-template {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
         color: $fontWhite;
         background-color: $primaryBlue;
         border: none;
@@ -30,6 +32,7 @@
         padding: 1rem;
         &:hover {
             cursor: pointer;
+            opacity: 70%;
         }
     }
 

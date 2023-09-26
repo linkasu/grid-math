@@ -1,6 +1,28 @@
 @import "./styles/colors.scss";
 @import "~bootstrap/scss/bootstrap";
 
+@font-face {
+    font-family: "Montserrat";
+    src: url("./fonts/Montserrat-Regular.woff2") format("woff2"),
+        url("./fonts/Montserrat-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Montserrat";
+    src: url("./fonts/Montserrat-SemiBold.woff2") format("woff2"),
+        url("./fonts/Montserrat-SemiBold.woff") format("woff");
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Montserrat";
+    src: url("./fonts/Montserrat-Bold.woff2") format("woff2"),
+        url("./fonts/Montserrat-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
 html {
     color: $fontBlack;
     font-family: sans-serif;
@@ -12,4 +34,7 @@ body {
 
 h2 {
     margin: 0;
+    font-family: "Montserrat", sans-serif;
+    color: $fontBlue;
+    font-weight: 700;
 }

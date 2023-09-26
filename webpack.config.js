@@ -1,24 +1,21 @@
 const path = require("path");
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
     entry: ["@babel/polyfill", "./src/index.tsx"],
     resolve: {
-        extensions: [".tsx",".ts",".js"],
+        extensions: [".tsx", ".ts", ".js"],
     },
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "[name].[hash].js"
+        filename: "[name].[hash].js",
     },
     devServer: {
-        port: 3000
+        port: 3000,
     },
-    plugins: [
-        new HTMLWebpackPlugin({template: "./src/index.html"}),
-        new CleanWebpackPlugin()
-    ],
+    plugins: [new HTMLWebpackPlugin({ template: "./src/index.html" }), new CleanWebpackPlugin()],
     module: {
         rules: [
             {
@@ -32,13 +29,28 @@ module.exports = {
             {
                 test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
-                use: [{
-                  loader: "babel-loader",
-                  options: {
-                    presets: ['@babel/preset-react', '@babel/preset-env']
-                  }
-                },"ts-loader"]
-            }
-        ]
-    }
-}
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ["@babel/preset-react", "@babel/preset-env"],
+                        },
+                    },
+                    "ts-loader",
+                ],
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "[name].[ext]",
+                            outputPath: "fonts/",
+                        },
+                    },
+                ],
+            },
+        ],
+    },
+};

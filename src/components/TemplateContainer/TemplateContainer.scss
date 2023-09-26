@@ -11,17 +11,15 @@
     }
 
     &__remove-button {
-        position: absolute;
-        top: 0;
-        right: 0;
         border-radius: 50%;
         border: none;
         background-color: $secondaryBlue;
-        transform: translate(-50%, -100%);
+        transform: translateY(-100%);
         width: 2.5rem;
         height: 2.5rem;
         &:hover {
             cursor: pointer;
+            opacity: 70%;
         }
     }
 }
