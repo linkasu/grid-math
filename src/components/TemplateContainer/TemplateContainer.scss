@@ -3,28 +3,11 @@
 .template {
     &__container {
         box-sizing: border-box;
-        width: 25%;
         position: relative;
         padding: 0.5rem;
         margin-bottom: 1.5rem;
         display: flex;
         justify-content: flex-start;
-        &_devision {
-            width: 50%;
-            &:nth-child(2n) {
-                justify-content: flex-end;
-            }
-        }
-        &_multiplication {
-            width: 33%;
-            justify-content: space-around;
-            &:nth-child(3n + 1) {
-                justify-content: flex-start;
-            }
-            &:nth-child(3n) {
-                justify-content: flex-end;
-            }
-        }
     }
 
     &__remove-button {

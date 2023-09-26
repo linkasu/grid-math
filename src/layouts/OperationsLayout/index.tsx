@@ -2,7 +2,6 @@ import React, { ReactElement, useState } from "react";
 import "./OperationsLayout.scss";
 import TemplateContainer, { TemplateWidth } from "../../components/TemplateContainer";
 import { OperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
-import classNames from "classnames";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
@@ -17,8 +16,8 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
     const increaseTemplateCount = () => setTemplatesCount((prev) => prev + 1);
     const decreaseTemplateCount = () => setTemplatesCount((prev) => prev - 1);
     return (
-        <div className={classNames("operations-layout")}>
-            <div className="operations-layout__header">
+        <div className="operations-layout">
+            <div className="operations-layout__header container">
                 <span className="operations-layout__title">
                     <h2>{layoutTitle}</h2> {getTemplateSymbol(operationType)}
                 </span>
@@ -26,14 +25,14 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                     Попробовать еще
                 </button>
             </div>
-            <div className="operations-layout__templates">
+            <div className="operations-layout__templates container">
                 {[...Array(templatesCount)].map((e, i) => (
                     <TemplateContainer
                         onRemoveTemplate={decreaseTemplateCount}
                         canRemoveTemplate={i > 0}
                         key={i}
                         template={template}
-                        templateWidth={templateWidth}
+                        operation={operationType}
                     ></TemplateContainer>
                 ))}
             </div>
