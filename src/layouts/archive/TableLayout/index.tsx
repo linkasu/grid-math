@@ -1,7 +1,7 @@
 import React from "react";
 import "./TableLayout.scss";
 import GridTable from "../../../components/archive/GridTable/GridTable";
-import ScaleSwitch from "../../../components/archive/ScaleSwitch";
+import ScaleSwitch from "../../../components/ScaleSwitch";
 
 const TableLayout = () => {
     return (

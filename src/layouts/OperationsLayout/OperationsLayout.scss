@@ -39,6 +39,7 @@
     &__templates {
         display: flex;
         flex-wrap: wrap;
+        box-sizing: content-box;
         width: 100%;
     }
 }

@@ -6,6 +6,7 @@ import SubtractionTemplate from "../../components/SubtractionTemplate";
 import MultiplicationTemplate from "../../components/MultiplicationTemplate";
 import { OperationType } from "../../components/BasicCalculationTemplate";
 import DivisionTemplate from "../../components/DivisionTemplate";
+import ScaleSwitch from "../../components/ScaleSwitch";
 
 export type Operation = {
     name: OperationType;
@@ -42,6 +43,7 @@ const operations: Operation[] = [
 
 const MainPageLayout = () => (
     <div className="templates-page">
+        <ScaleSwitch />
         {operations.map((operation, i) => (
             <section key={i}>
                 <OperationsLayout

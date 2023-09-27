@@ -8,6 +8,15 @@
         margin-bottom: 4.5rem;
         display: flex;
         justify-content: flex-start;
+        &_small {
+            min-width: 25%;
+        }
+        &_medium {
+            min-width: 33.33%;
+        }
+        &_large {
+            min-width: 50%;
+        }
     }
 
     &__remove-button {
@@ -20,6 +29,13 @@
         &:hover {
             cursor: pointer;
             opacity: 70%;
+        }
+        &_hidden {
+            opacity: 0;
+            &:hover {
+                cursor: unset;
+                opacity: 0;
+            }
         }
     }
 }

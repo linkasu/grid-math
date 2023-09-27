@@ -32,9 +32,12 @@ body {
     margin: 0;
 }
 
-h2 {
+h2,
+h6 {
     margin: 0;
     font-family: "Montserrat", sans-serif;
-    color: $fontBlue;
     font-weight: 700;
+}
+h2 {
+    color: $fontBlue;
 }
