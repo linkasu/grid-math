@@ -28,7 +28,7 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                 <span className="operations-layout__title">
                     <h2>{layoutTitle}</h2> {getTemplateSymbol(operationType)}
                 </span>
-                <button onClick={increaseTemplateCount} className="operations-layout__add-template">
+                <button onClick={increaseTemplateCount} aria-label="Добавить шаблон" className="operations-layout__add-template">
                     Попробовать еще
                 </button>
             </div>

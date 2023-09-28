@@ -42,17 +42,19 @@ const operations: Operation[] = [
 ];
 
 const MainPageLayout = () => (
-    <div className="templates-page">
+    <div className="relative-background">
         <ScaleSwitch />
-        {operations.map((operation, i) => (
-            <section key={i}>
-                <OperationsLayout
-                    operationType={operation.name}
-                    layoutTitle={operation.title}
-                    template={operation.template}
-                />
-            </section>
-        ))}
+        <div className="templates-page" id="templates-page">
+            {operations.map((operation, i) => (
+                <section key={i}>
+                    <OperationsLayout
+                        operationType={operation.name}
+                        layoutTitle={operation.title}
+                        template={operation.template}
+                    />
+                </section>
+            ))}
+        </div>
     </div>
 );
 

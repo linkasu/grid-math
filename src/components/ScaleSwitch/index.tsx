@@ -4,30 +4,35 @@ import "./ScaleSwitch.scss";
 const ScaleSwitch = () => {
     let zoom = 1;
     let width = 100;
+    // @ts-ignore
+    const isChrome = window.chrome;
 
-    function increaseScale() {
+    const increaseScale = () => {
         zoom = zoom + 0.1;
-        width = 100 / zoom;
-        document.body.style.transformOrigin = "left top";
-        // @ts-ignore
-        document.body.style.zoom = zoom;
-        //document.body.style.transform = "scale(" + zoom + ")";
-        // document.body.style.width = width + "%";
-    }
-    function decreaseScale() {
+        scalePage(zoom);
+    };
+    const decreaseScale = () => {
         zoom = zoom - 0.1;
+        scalePage(zoom);
+    };
+
+    const scalePage = (zoom: number) => {
+        const scalableLayout = document.getElementById("templates-page");
+        if (!scalableLayout) return;
         width = 100 / zoom;
-        document.body.style.transformOrigin = "left top";
+        scalableLayout.style.transformOrigin = "left top";
         // @ts-ignore
-        document.body.style.zoom = zoom;
-        //document.body.style.transform = "scale(" + zoom + ")";
-        //document.body.style.width = width + "%";
-    }
+        scalableLayout.style.zoom = zoom;
+        if (!isChrome) {
+            scalableLayout.style.transform = "scale(" + zoom + ")";
+            scalableLayout.style.width = width + "%";
+        }
+    };
     return (
         <div className="scaleSwitch">
             <h6>Увеличить масштаб</h6>
-            <button onClick={decreaseScale}>-</button>
-            <button onClick={increaseScale}>+</button>
+            <button aria-label="Увеличить масштаб" onClick={decreaseScale}>-</button>
+            <button aria-label="Уменьшить масштаб"  onClick={increaseScale}>+</button>
         </div>
     );
 };

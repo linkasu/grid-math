@@ -25,7 +25,7 @@ const TemplateContainer = (props: ITemplateContainerProps) => {
         >
             {template}
             <button
-                value="Удалить шаблон"
+                aria-label="Удалить шаблон"
                 onClick={onClickRemove}
                 className={classNames("template__remove-button", {
                     ["template__remove-button_hidden"]: !canRemoveTemplate,

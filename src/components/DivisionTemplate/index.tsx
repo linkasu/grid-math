@@ -17,6 +17,7 @@ const DivisionTemplate = (props: IDivisionTemplateProps) => {
             <div className="template">
                 {[...Array(MAX_DIGIT_NUMBER)].map((e, i) => (
                     <BasicCalculationTemplate
+                        key={`division-helper-${i}`}
                         calculatedNumbersCount={calculatedNumbersCount}
                         operation={"subtraction"}
                         digitsInRow={MAX_DIGIT_NUMBER}

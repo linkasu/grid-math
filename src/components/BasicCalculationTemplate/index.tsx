@@ -36,7 +36,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
     return (
         <div className="template__calculation">
             {[...Array(calculatedNumbersCount)].map((e, i) => (
-                <>
+                <div key={`${operation}-${i}`}>
                     {(i === 0 || isHelperCalculation) && (
                         <CalculationRow
                             digitsInRow={digitsInRow}
@@ -61,7 +61,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                             {getTemplateSymbol(operation)}
                         </div>
                     )}
-                </>
+                </div>
             ))}
         </div>
     );
