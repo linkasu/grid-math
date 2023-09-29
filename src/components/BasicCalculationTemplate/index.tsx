@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./BasicCalculationTemplate.scss";
 import classNames from "classnames";
 import PlusIcon from "../../icons/PlusIcon";
@@ -14,6 +14,8 @@ interface IBasicCalculationTemplateProps {
     digitsInRow: number;
     calculatedNumbersCount: number;
     isHelperCalculation?: boolean;
+    digitsInResult?: number;
+    isFocusedBasic?: boolean;
 }
 
 export const getTemplateSymbol = (operation: OperationType) => {
@@ -30,18 +32,48 @@ export const getTemplateSymbol = (operation: OperationType) => {
 };
 
 const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
-    const { operation, digitsInRow, calculatedNumbersCount, isHelperCalculation = false } = props;
+    const {
+        operation,
+        digitsInRow,
+        calculatedNumbersCount,
+        isHelperCalculation = false,
+        digitsInResult = 0,
+        isFocusedBasic = false
+    } = props;
+    const [focusedRow, setFocusedRow] = useState(0);
     const isHelperAddition = isHelperCalculation && operation === "addition";
+
+    if (operation === "division") {
+        return (
+            <div className="template__division-right-side">
+                <CalculationRow
+                    rowType="calculation"
+                    digitsInRow={digitsInRow}
+                    isFocusedRow={calculatedNumbersCount + 1 === focusedRow && isFocusedBasic}
+                    setRowFocused={() => setFocusedRow(calculatedNumbersCount + 1)}
+                />
+                <div className="template__division-divide-line"></div>
+                <CalculationRow
+                    rowType="result"
+                    digitsInRow={digitsInRow}
+                    isFocusedRow={calculatedNumbersCount + 2 === focusedRow && isFocusedBasic}
+                    setRowFocused={() => setFocusedRow(calculatedNumbersCount + 2)}
+                />
+            </div>
+        );
+    }
 
     return (
         <div className="template__calculation">
             {[...Array(calculatedNumbersCount)].map((e, i) => (
                 <div key={`${operation}-${i}`}>
-                    {(i === 0 || isHelperCalculation) && (
+                    {(i === 0 || isHelperCalculation) && i !== calculatedNumbersCount && (
                         <CalculationRow
                             digitsInRow={digitsInRow}
                             rowType={"helper"}
                             offsetCells={isHelperAddition ? i : 0}
+                            isFocusedRow={i === focusedRow && isFocusedBasic}
+                            setRowFocused={() => setFocusedRow(i)}
                         />
                     )}
                     <CalculationRow
@@ -50,16 +82,27 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                         className={classNames({
                             ["calculationRow_last"]: i + 1 === calculatedNumbersCount,
                         })}
-                        offsetCells={isHelperAddition ? i : 0}
+                        offsetCells={isHelperAddition && i !== calculatedNumbersCount ? i : 0}
+                        isFocusedRow={i === focusedRow && isFocusedBasic}
+                        setRowFocused={() => setFocusedRow(i)}
                     />
                     {i === 0 && (
                         <div
                             className={classNames("template__symbol", {
-                                ["template__symbol_helper-plus"]: isHelperAddition,
+                                ["template__symbol_plus"]: operation==="addition",
+                                ["template__symbol_plus-helper"]: isHelperAddition,
                             })}
                         >
                             {getTemplateSymbol(operation)}
                         </div>
+                    )}
+                    {i + 1 === calculatedNumbersCount && digitsInResult > 0 && (
+                        <CalculationRow
+                            isFocusedRow={i + 1 === focusedRow && isFocusedBasic}
+                            rowType="result"
+                            digitsInRow={digitsInResult}
+                            setRowFocused={() => setFocusedRow(i + 1)}
+                        />
                     )}
                 </div>
             ))}

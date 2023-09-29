@@ -1,6 +1,5 @@
 import React from "react";
 import "./DivisionTemplate.scss";
-import CalculationRow from "../CalculationRow";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
 
 interface IDivisionTemplateProps {
@@ -22,15 +21,16 @@ const DivisionTemplate = (props: IDivisionTemplateProps) => {
                         operation={"subtraction"}
                         digitsInRow={MAX_DIGIT_NUMBER}
                         isHelperCalculation
+                        digitsInResult={i + 1 === MAX_DIGIT_NUMBER ? MAX_DIGIT_NUMBER : 0}
+                        isFocusedBasic={i===0}
                     />
                 ))}
-                <CalculationRow rowType="calculation" digitsInRow={MAX_DIGIT_NUMBER} />
             </div>
-            <div className="template__division-right-side">
-                <CalculationRow rowType="calculation" digitsInRow={MAX_DIGIT_NUMBER}/>
-                <div className="template__division-divide-line"></div>
-                <CalculationRow rowType="result" digitsInRow={MAX_DIGIT_NUMBER}/>
-            </div>
+            <BasicCalculationTemplate
+                calculatedNumbersCount={calculatedNumbersCount}
+                operation="division"
+                digitsInRow={MAX_DIGIT_NUMBER}
+            />
         </div>
     );
 };

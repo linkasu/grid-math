@@ -1,17 +1,31 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import { RowType } from "../CalculationRow";
 
 interface ICalculationCellProps {
     rowType: RowType;
     isOffsetCell?: boolean;
+    isFocused?: boolean;
+    onCellEnter: () => void;
+    focusNextCell: () => void;
 }
 
 const CalculationCell = (props: ICalculationCellProps) => {
-    const { rowType, isOffsetCell } = props;
+    const { rowType, isOffsetCell = false, isFocused = false, onCellEnter, focusNextCell } = props;
     const inputRef = useRef<HTMLInputElement>(null);
 
     const maxLength = rowType === "helper" ? 3 : 1;
+
+    useEffect(() => {
+        if (isFocused) {
+            inputRef.current?.focus();
+        }
+    }, [isFocused]);
+
+    const onInput = () => {
+        controlInputValues();
+        rowType !== "helper" && focusNextCell();
+    };
 
     const controlInputValues = () => {
         const value = inputRef.current?.value;
@@ -27,7 +41,9 @@ const CalculationCell = (props: ICalculationCellProps) => {
             type="text"
             maxLength={maxLength}
             ref={inputRef}
-            onInput={controlInputValues}
+            autoFocus={isFocused}
+            onInput={onInput}
+            onFocus={onCellEnter}
             className={classNames("calculationRow__cell", {
                 ["calculationRow__cell_helper"]: rowType === "helper",
                 ["calculationRow__cell_result"]: rowType === "result",

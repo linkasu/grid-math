@@ -18,9 +18,12 @@
         position: absolute;
         top: 56px;
         left: 0;
-        transform: translate(calc(-100% - 1rem), 0);
-        &_helper-plus {
-            transform: translate(50%, 0);
+        transform: translateX(calc(-100% - 1rem));
+        &_plus {
+            transform: translateX(calc(100% - 1rem));
+            &-helper {
+                transform: translateX(calc(300% - 1rem));
+            }
         }
     }
 }

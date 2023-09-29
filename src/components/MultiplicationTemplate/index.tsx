@@ -1,5 +1,4 @@
 import React from "react";
-import CalculationRow from "../CalculationRow";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
 
 interface IMultiplicationTemplateProps {
@@ -17,14 +16,15 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 calculatedNumbersCount={calculatedNumbersCount}
                 operation={"multiplication"}
                 digitsInRow={MAX_DIGIT_NUMBER}
+                isFocusedBasic
             />
             <BasicCalculationTemplate
                 calculatedNumbersCount={MAX_DIGIT_NUMBER}
                 operation={"addition"}
                 digitsInRow={MAX_DIGIT_NUMBER + 1}
                 isHelperCalculation
+                digitsInResult={MAX_DIGIT_NUMBER * 2 + 1}
             />
-            <CalculationRow rowType="result" digitsInRow={MAX_DIGIT_NUMBER * 2 + 1} />
         </div>
     );
 };

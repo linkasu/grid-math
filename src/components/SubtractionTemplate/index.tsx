@@ -1,5 +1,4 @@
 import React from "react";
-import CalculationRow from "../CalculationRow";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
 
 interface ISubtractionTemplateProps {
@@ -17,8 +16,9 @@ const SubtractionTemplate = (props: ISubtractionTemplateProps) => {
                 calculatedNumbersCount={calculatedNumbersCount}
                 operation={"subtraction"}
                 digitsInRow={MAX_DIGIT_NUMBER}
+                digitsInResult={MAX_DIGIT_NUMBER}
+                isFocusedBasic={true}
             />
-            <CalculationRow rowType="result" digitsInRow={MAX_DIGIT_NUMBER} />
         </div>
     );
 };
