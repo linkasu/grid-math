@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
 
 interface IMultiplicationTemplateProps {
@@ -9,6 +9,7 @@ const MAX_DIGIT_NUMBER = 3;
 
 const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
     const { calculatedNumbersCount } = props;
+    const [focusedBasic, setFocusedBasic] = useState(0);
 
     return (
         <div className="template">
@@ -16,7 +17,11 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 calculatedNumbersCount={calculatedNumbersCount}
                 operation={"multiplication"}
                 digitsInRow={MAX_DIGIT_NUMBER}
-                isFocusedBasic
+                isFocusedBasic={focusedBasic === 0}
+                setBasicFocused={() => {
+                    setFocusedBasic(0);
+                }}
+                basicIndex={0}
             />
             <BasicCalculationTemplate
                 calculatedNumbersCount={MAX_DIGIT_NUMBER}
@@ -24,6 +29,11 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 digitsInRow={MAX_DIGIT_NUMBER + 1}
                 isHelperCalculation
                 digitsInResult={MAX_DIGIT_NUMBER * 2 + 1}
+                isFocusedBasic={focusedBasic === 1}
+                setBasicFocused={() => {
+                    setFocusedBasic(1);
+                }}
+                basicIndex={1}
             />
         </div>
     );

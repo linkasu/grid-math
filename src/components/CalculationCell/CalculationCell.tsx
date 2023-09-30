@@ -7,7 +7,7 @@ interface ICalculationCellProps {
     isOffsetCell?: boolean;
     isFocused?: boolean;
     onCellEnter: () => void;
-    focusNextCell: () => void;
+    focusNextCell: (moveTo: "right" | "left") => void;
 }
 
 const CalculationCell = (props: ICalculationCellProps) => {
@@ -23,14 +23,16 @@ const CalculationCell = (props: ICalculationCellProps) => {
     }, [isFocused]);
 
     const onInput = () => {
-        controlInputValues();
-        rowType !== "helper" && focusNextCell();
+        const value = inputRef.current?.value;
+        if (!value || !value.trim()) return;
+        controlInputValues(value);
+        if (rowType === "helper") return;
+        focusNextCell(rowType === "number" ? "right" : "left");
     };
 
-    const controlInputValues = () => {
-        const value = inputRef.current?.value;
+    const controlInputValues = (value: string) => {
         const pattern = rowType === "helper" ? new RegExp(/[0-9\.]/) : new RegExp(/[0-9]/);
-        if (!value) return;
+
         if (!pattern.test(value)) {
             /* @ts-ignore*/
             inputRef.current?.value = value.slice(0, -1);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DivisionTemplate.scss";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
 
@@ -10,6 +10,7 @@ const MAX_DIGIT_NUMBER = 5;
 
 const DivisionTemplate = (props: IDivisionTemplateProps) => {
     const { calculatedNumbersCount } = props;
+    const [focusedBasic, setFocusedBasic] = useState(0);
 
     return (
         <div className="template__division">
@@ -22,7 +23,11 @@ const DivisionTemplate = (props: IDivisionTemplateProps) => {
                         digitsInRow={MAX_DIGIT_NUMBER}
                         isHelperCalculation
                         digitsInResult={i + 1 === MAX_DIGIT_NUMBER ? MAX_DIGIT_NUMBER : 0}
-                        isFocusedBasic={i===0}
+                        isFocusedBasic={i === focusedBasic}
+                        setBasicFocused={() => {
+                            setFocusedBasic(i);
+                        }}
+                        basicIndex={i}
                     />
                 ))}
             </div>
@@ -30,6 +35,9 @@ const DivisionTemplate = (props: IDivisionTemplateProps) => {
                 calculatedNumbersCount={calculatedNumbersCount}
                 operation="division"
                 digitsInRow={MAX_DIGIT_NUMBER}
+                setBasicFocused={() => setFocusedBasic(MAX_DIGIT_NUMBER)}
+                isFocusedBasic={focusedBasic === MAX_DIGIT_NUMBER}
+                basicIndex={MAX_DIGIT_NUMBER}
             />
         </div>
     );

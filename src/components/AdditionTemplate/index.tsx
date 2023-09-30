@@ -18,6 +18,7 @@ const AdditionTemplate = (props: IAdditionTemplateProps) => {
                 digitsInRow={MAX_DIGIT_NUMBER}
                 digitsInResult={MAX_DIGIT_NUMBER + 1}
                 isFocusedBasic
+                basicIndex={0}
             />
         </div>
     );

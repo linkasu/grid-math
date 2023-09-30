@@ -18,6 +18,7 @@ const SubtractionTemplate = (props: ISubtractionTemplateProps) => {
                 digitsInRow={MAX_DIGIT_NUMBER}
                 digitsInResult={MAX_DIGIT_NUMBER}
                 isFocusedBasic={true}
+                basicIndex={0}
             />
         </div>
     );

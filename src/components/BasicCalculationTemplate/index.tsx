@@ -16,6 +16,8 @@ interface IBasicCalculationTemplateProps {
     isHelperCalculation?: boolean;
     digitsInResult?: number;
     isFocusedBasic?: boolean;
+    setBasicFocused?: () => void;
+    basicIndex: number;
 }
 
 export const getTemplateSymbol = (operation: OperationType) => {
@@ -38,26 +40,34 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
         calculatedNumbersCount,
         isHelperCalculation = false,
         digitsInResult = 0,
-        isFocusedBasic = false
+        isFocusedBasic = false,
+        setBasicFocused,
+        basicIndex,
     } = props;
     const [focusedRow, setFocusedRow] = useState(0);
     const isHelperAddition = isHelperCalculation && operation === "addition";
+    const onRowClick = (rowId: number) => {
+        if (!isFocusedBasic) {
+            setBasicFocused && setBasicFocused();
+        }
+        setFocusedRow(rowId);
+    };
 
     if (operation === "division") {
         return (
             <div className="template__division-right-side">
                 <CalculationRow
-                    rowType="calculation"
+                    rowType="number"
                     digitsInRow={digitsInRow}
                     isFocusedRow={calculatedNumbersCount + 1 === focusedRow && isFocusedBasic}
-                    setRowFocused={() => setFocusedRow(calculatedNumbersCount + 1)}
+                    setRowFocused={() => onRowClick(calculatedNumbersCount + 1)}
                 />
                 <div className="template__division-divide-line"></div>
                 <CalculationRow
                     rowType="result"
                     digitsInRow={digitsInRow}
                     isFocusedRow={calculatedNumbersCount + 2 === focusedRow && isFocusedBasic}
-                    setRowFocused={() => setFocusedRow(calculatedNumbersCount + 2)}
+                    setRowFocused={() => onRowClick(calculatedNumbersCount + 2)}
                 />
             </div>
         );
@@ -73,23 +83,23 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                             rowType={"helper"}
                             offsetCells={isHelperAddition ? i : 0}
                             isFocusedRow={i === focusedRow && isFocusedBasic}
-                            setRowFocused={() => setFocusedRow(i)}
+                            setRowFocused={() => onRowClick(i)}
                         />
                     )}
                     <CalculationRow
                         digitsInRow={digitsInRow}
-                        rowType={"calculation"}
+                        rowType={basicIndex > 0 ? "calculation" : "number"}
                         className={classNames({
                             ["calculationRow_last"]: i + 1 === calculatedNumbersCount,
                         })}
                         offsetCells={isHelperAddition && i !== calculatedNumbersCount ? i : 0}
                         isFocusedRow={i === focusedRow && isFocusedBasic}
-                        setRowFocused={() => setFocusedRow(i)}
+                        setRowFocused={() => onRowClick(i)}
                     />
                     {i === 0 && (
                         <div
                             className={classNames("template__symbol", {
-                                ["template__symbol_plus"]: operation==="addition",
+                                ["template__symbol_plus"]: operation === "addition",
                                 ["template__symbol_plus-helper"]: isHelperAddition,
                             })}
                         >
@@ -101,7 +111,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                             isFocusedRow={i + 1 === focusedRow && isFocusedBasic}
                             rowType="result"
                             digitsInRow={digitsInResult}
-                            setRowFocused={() => setFocusedRow(i + 1)}
+                            setRowFocused={() => onRowClick(i + 1)}
                         />
                     )}
                 </div>
