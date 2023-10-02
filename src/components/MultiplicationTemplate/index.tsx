@@ -10,6 +10,13 @@ const MAX_DIGIT_NUMBER = 3;
 const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
     const { calculatedNumbersCount } = props;
     const [focusedBasic, setFocusedBasic] = useState(0);
+    const setNextBasicFocused = (moveTo: "next" | "prev") => {
+        if (moveTo==="prev") {
+            setFocusedBasic((prev) => prev - 1);
+        } else if (moveTo==="next") {
+            setFocusedBasic((prev) => prev + 1);
+        }
+    };
 
     return (
         <div className="template">
@@ -21,6 +28,7 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 setBasicFocused={() => {
                     setFocusedBasic(0);
                 }}
+                setNextBasicFocused={setNextBasicFocused}
                 basicIndex={0}
             />
             <BasicCalculationTemplate
@@ -33,6 +41,7 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 setBasicFocused={() => {
                     setFocusedBasic(1);
                 }}
+                setNextBasicFocused={setNextBasicFocused}
                 basicIndex={1}
             />
         </div>

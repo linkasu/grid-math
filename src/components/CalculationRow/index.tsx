@@ -12,6 +12,7 @@ interface ICalculationRowProps {
     className?: string;
     isFocusedRow?: boolean;
     setRowFocused: () => void;
+    focusNextRow: (moveFocus: "up" | "down") => void;
 }
 
 const CalculationRow = (props: ICalculationRowProps) => {
@@ -22,6 +23,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
         className,
         isFocusedRow = false,
         setRowFocused,
+        focusNextRow,
     } = props;
     const rowCellsCount = digitsInRow + offsetCells;
 
@@ -37,13 +39,26 @@ const CalculationRow = (props: ICalculationRowProps) => {
     const changeFocusedCell = (index: number) => setFocusedCellIndex(index);
     const focuseNextCell = (moveFocus: "left" | "right") => {
         if (moveFocus === "left") {
-            setFocusedCellIndex((prev) => prev - 1);
+            if (focusedCellIndex > 0) {
+                setFocusedCellIndex((prev) => prev - 1);
+            }
         } else {
-            setFocusedCellIndex((prev) => prev + 1);
+            if (focusedCellIndex + 1 < rowCellsCount) {
+                setFocusedCellIndex((prev) => prev + 1);
+            }
         }
     };
+    const onKeyUp = (e:React.KeyboardEvent<HTMLInputElement>) => {
+        if(e.key==="ArrowUp") {
+            focusNextRow("up");
+            changeFocusedCell(focusedCellIndex)
+        } else if (e.key==="ArrowDown") {
+            focusNextRow("down");
+            changeFocusedCell(focusedCellIndex)
+        }
+    }
     return (
-        <div className={classNames("calculationRow", className)}>
+        <div className={classNames("calculationRow", className)} onKeyDown={onKeyUp}>
             {[...Array(rowCellsCount)].map((e, i) => (
                 <CalculationCell
                     key={i}

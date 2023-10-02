@@ -29,6 +29,13 @@ const CalculationCell = (props: ICalculationCellProps) => {
         if (rowType === "helper") return;
         focusNextCell(rowType === "number" ? "right" : "left");
     };
+    const onKeyUp = (e:React.KeyboardEvent<HTMLInputElement>) => {
+        if(e.key==="ArrowRight") {
+            focusNextCell("right");
+        } else if (e.key==="ArrowLeft") {
+            focusNextCell("left");
+        }
+    }
 
     const controlInputValues = (value: string) => {
         const pattern = rowType === "helper" ? new RegExp(/[0-9\.]/) : new RegExp(/[0-9]/);
@@ -38,6 +45,7 @@ const CalculationCell = (props: ICalculationCellProps) => {
             inputRef.current?.value = value.slice(0, -1);
         }
     };
+
     return (
         <input
             type="text"
@@ -45,6 +53,7 @@ const CalculationCell = (props: ICalculationCellProps) => {
             ref={inputRef}
             autoFocus={isFocused}
             onInput={onInput}
+            onKeyDown={onKeyUp}
             onFocus={onCellEnter}
             className={classNames("calculationRow__cell", {
                 ["calculationRow__cell_helper"]: rowType === "helper",
