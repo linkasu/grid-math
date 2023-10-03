@@ -1,26 +1,25 @@
 import React from "react";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
+import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
+import { TemplateType } from "../Template";
 
-interface IAdditionTemplateProps {
-    calculatedNumbersCount: number;
+interface IAdditionTemplateProps extends TemplateType {
 }
 
 const MAX_DIGIT_NUMBER = 5;
 
 const AdditionTemplate = (props: IAdditionTemplateProps) => {
-    const { calculatedNumbersCount } = props;
+    const { focusedBasic, onNextBasic, setBasicFocused } = props;
 
     return (
-        <div className="template">
-            <BasicCalculationTemplate
-                calculatedNumbersCount={calculatedNumbersCount}
-                operation={"addition"}
-                digitsInRow={MAX_DIGIT_NUMBER}
-                digitsInResult={MAX_DIGIT_NUMBER + 1}
-                isFocusedBasic
-                basicIndex={0}
-            />
-        </div>
+        <BasicCalculationTemplate
+            calculatedNumbersCount={CALCULATED_NUMBERS_COUNT}
+            operation={"addition"}
+            digitsInRow={MAX_DIGIT_NUMBER}
+            digitsInResult={MAX_DIGIT_NUMBER + 1}
+            basicIndex={0}
+            isFocusedBasic={true}
+        />
     );
 };
 

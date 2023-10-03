@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import "./DivisionTemplate.scss";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
+import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
+import { TemplateType } from "../Template";
 
-interface IDivisionTemplateProps {
-    calculatedNumbersCount: number;
+interface IDivisionTemplateProps extends TemplateType {
 }
 
 const MAX_DIGIT_NUMBER = 5;
 
 const DivisionTemplate = (props: IDivisionTemplateProps) => {
-    const { calculatedNumbersCount } = props;
-    const [focusedBasic, setFocusedBasic] = useState(0);
+    const { focusedBasic, onNextBasic, setBasicFocused } = props;
 
     return (
         <div className="template__division">
@@ -18,24 +18,25 @@ const DivisionTemplate = (props: IDivisionTemplateProps) => {
                 {[...Array(MAX_DIGIT_NUMBER)].map((e, i) => (
                     <BasicCalculationTemplate
                         key={`division-helper-${i}`}
-                        calculatedNumbersCount={calculatedNumbersCount}
+                        calculatedNumbersCount={CALCULATED_NUMBERS_COUNT}
                         operation={"subtraction"}
                         digitsInRow={MAX_DIGIT_NUMBER}
                         isHelperCalculation
                         digitsInResult={i + 1 === MAX_DIGIT_NUMBER ? MAX_DIGIT_NUMBER : 0}
                         isFocusedBasic={i === focusedBasic}
                         setBasicFocused={() => {
-                            setFocusedBasic(i);
+                            setBasicFocused(i);
                         }}
                         basicIndex={i}
+                        setNextBasicFocused={onNextBasic}
                     />
                 ))}
             </div>
             <BasicCalculationTemplate
-                calculatedNumbersCount={calculatedNumbersCount}
+                calculatedNumbersCount={CALCULATED_NUMBERS_COUNT}
                 operation="division"
                 digitsInRow={MAX_DIGIT_NUMBER}
-                setBasicFocused={() => setFocusedBasic(MAX_DIGIT_NUMBER)}
+                setBasicFocused={() => setBasicFocused(MAX_DIGIT_NUMBER)}
                 isFocusedBasic={focusedBasic === MAX_DIGIT_NUMBER}
                 basicIndex={MAX_DIGIT_NUMBER}
             />

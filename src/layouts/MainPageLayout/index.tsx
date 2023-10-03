@@ -11,7 +11,6 @@ import ScaleSwitch from "../../components/ScaleSwitch";
 export type Operation = {
     name: OperationType;
     title: string;
-    template: ReactElement;
 };
 
 export const CALCULATED_NUMBERS_COUNT = 2;
@@ -22,22 +21,18 @@ const operations: Operation[] = [
     {
         name: "addition",
         title: "Сложение",
-        template: <AdditionTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
     },
     {
         name: "subtraction",
         title: "Вычитание",
-        template: <SubtractionTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
     },
     {
         name: "multiplication",
         title: "Умножение",
-        template: <MultiplicationTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
     },
     {
         name: "division",
         title: "Деление",
-        template: <DivisionTemplate calculatedNumbersCount={CALCULATED_NUMBERS_COUNT} />,
     },
 ];
 
@@ -50,7 +45,6 @@ const MainPageLayout = () => (
                     <OperationsLayout
                         operationType={operation.name}
                         layoutTitle={operation.title}
-                        template={operation.template}
                     />
                 </section>
             ))}

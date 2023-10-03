@@ -1,16 +1,16 @@
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import "./OperationsLayout.scss";
 import TemplateContainer from "../../components/TemplateContainer";
 import { OperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
+import Template from "../../components/Template";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
-    template: ReactElement;
     operationType: OperationType;
 }
 
 const OperationsLayout = (props: IOperationsLayoutProps) => {
-    const { layoutTitle, template, operationType } = props;
+    const { layoutTitle, operationType } = props;
     const [templatesIds, setTemplatesIds] = useState([`${operationType}-0`]);
     const increaseTemplateCount = () => setTemplatesIds((prev) => [...prev, createNewId()]);
     const createNewId = (): string => {
@@ -39,7 +39,7 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                         canRemoveTemplate={index > 0}
                         id={id}
                         key={id}
-                        template={template}
+                        template={<Template operation={operationType}/>}
                         operation={operationType}
                     />
                 ))}

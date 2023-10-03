@@ -1,34 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
+import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
+import { TemplateType } from "../Template";
 
-interface IMultiplicationTemplateProps {
-    calculatedNumbersCount: number;
+interface IMultiplicationTemplateProps extends TemplateType {
 }
 
 const MAX_DIGIT_NUMBER = 3;
 
 const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
-    const { calculatedNumbersCount } = props;
-    const [focusedBasic, setFocusedBasic] = useState(0);
-    const setNextBasicFocused = (moveTo: "next" | "prev") => {
-        if (moveTo==="prev") {
-            setFocusedBasic((prev) => prev - 1);
-        } else if (moveTo==="next") {
-            setFocusedBasic((prev) => prev + 1);
-        }
-    };
+    const { focusedBasic, onNextBasic, setBasicFocused } = props;
 
     return (
         <div className="template">
             <BasicCalculationTemplate
-                calculatedNumbersCount={calculatedNumbersCount}
+                calculatedNumbersCount={CALCULATED_NUMBERS_COUNT}
                 operation={"multiplication"}
                 digitsInRow={MAX_DIGIT_NUMBER}
                 isFocusedBasic={focusedBasic === 0}
-                setBasicFocused={() => {
-                    setFocusedBasic(0);
-                }}
-                setNextBasicFocused={setNextBasicFocused}
+                setBasicFocused={()=>setBasicFocused(0)}
+                setNextBasicFocused={onNextBasic}
                 basicIndex={0}
             />
             <BasicCalculationTemplate
@@ -39,9 +30,9 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 digitsInResult={MAX_DIGIT_NUMBER * 2 + 1}
                 isFocusedBasic={focusedBasic === 1}
                 setBasicFocused={() => {
-                    setFocusedBasic(1);
+                    setBasicFocused(1);
                 }}
-                setNextBasicFocused={setNextBasicFocused}
+                setNextBasicFocused={onNextBasic}
                 basicIndex={1}
             />
         </div>

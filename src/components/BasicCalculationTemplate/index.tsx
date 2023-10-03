@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./BasicCalculationTemplate.scss";
 import classNames from "classnames";
 import PlusIcon from "../../icons/PlusIcon";
@@ -48,9 +48,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
     } = props;
     const [focusedRow, setFocusedRow] = useState(0);
     const isHelperAddition = isHelperCalculation && operation === "addition";
-    useEffect(() => {
-        setFocusedRow(focusedRow);
-    }, [isFocusedBasic]);
+
     const onRowClick = (rowId: number) => {
         if (!isFocusedBasic) {
             setBasicFocused && setBasicFocused();
@@ -59,15 +57,15 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
     };
     const moveFocusToNextRow = (moveTo: "up" | "down") => {
         if (moveTo === "up") {
-            if (focusedRow - 1 < 0 && setNextBasicFocused) {
-                setNextBasicFocused("prev");
+            if (focusedRow - 1 < 0 ) {
+                setNextBasicFocused && setNextBasicFocused("prev");
             } else {
                 onRowClick(focusedRow - 1);
             }
         } else if (moveTo === "down") {
             const resultRowCount = digitsInResult > 0 ? 1 : 0;
-            if (focusedRow + 1 >= calculatedNumbersCount+resultRowCount && setNextBasicFocused) {
-                setNextBasicFocused("next");
+            if (focusedRow + 1 >= calculatedNumbersCount+resultRowCount) {
+                setNextBasicFocused && setNextBasicFocused("next");
             } else {
                 onRowClick(focusedRow + 1);
             }

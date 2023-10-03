@@ -43,7 +43,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
                 setFocusedCellIndex((prev) => prev - 1);
             }
         } else {
-            if (focusedCellIndex + 1 < rowCellsCount) {
+            if (focusedCellIndex + 1 < digitsInRow) {
                 setFocusedCellIndex((prev) => prev + 1);
             }
         }
