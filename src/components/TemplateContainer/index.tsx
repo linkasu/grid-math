@@ -3,9 +3,6 @@ import classNames from "classnames";
 import "./TemplateContainer.scss";
 import { OperationType } from "../BasicCalculationTemplate";
 import DeleteIcon from "../../icons/DeleteIcon";
-import AdditionTemplate from "../AdditionTemplate";
-import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
-import SubtractionTemplate from "../SubtractionTemplate";
 
 interface ITemplateContainerProps {
     template: ReactElement;

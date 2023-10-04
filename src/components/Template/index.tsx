@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import BasicCalculationTemplate, { OperationType } from "../BasicCalculationTemplate";
+import { OperationType } from "../BasicCalculationTemplate";
 import AdditionTemplate from "../AdditionTemplate";
-import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
 import SubtractionTemplate from "../SubtractionTemplate";
 import MultiplicationTemplate from "../MultiplicationTemplate";
 import DivisionTemplate from "../DivisionTemplate";
@@ -14,7 +13,7 @@ export type TemplateType = {
     focusedBasic: number;
     onNextBasic: (moveTo: "next" | "prev") => void;
     setBasicFocused: (basicId: number) => void;
-}
+};
 
 const Template = (props: ITemplateProps) => {
     const { operation } = props;
@@ -30,19 +29,41 @@ const Template = (props: ITemplateProps) => {
     const getOperationTemplate = (): React.JSX.Element => {
         switch (operation) {
             case "addition":
-                return <AdditionTemplate focusedBasic={focusedBasic} onNextBasic={setNextBasicFocused} setBasicFocused={(basicId: number)=>setFocusedBasic(basicId)} />;
+                return (
+                    <AdditionTemplate
+                        focusedBasic={focusedBasic}
+                        onNextBasic={setNextBasicFocused}
+                        setBasicFocused={(basicId: number) => setFocusedBasic(basicId)}
+                    />
+                );
             case "subtraction":
-                return <SubtractionTemplate focusedBasic={focusedBasic} onNextBasic={setNextBasicFocused} setBasicFocused={(basicId: number)=>setFocusedBasic(basicId)}/>;
+                return (
+                    <SubtractionTemplate
+                        focusedBasic={focusedBasic}
+                        onNextBasic={setNextBasicFocused}
+                        setBasicFocused={(basicId: number) => setFocusedBasic(basicId)}
+                    />
+                );
             case "multiplication":
-                return <MultiplicationTemplate focusedBasic={focusedBasic} onNextBasic={setNextBasicFocused} setBasicFocused={(basicId: number)=>setFocusedBasic(basicId)}/>;
+                return (
+                    <MultiplicationTemplate
+                        focusedBasic={focusedBasic}
+                        onNextBasic={setNextBasicFocused}
+                        setBasicFocused={(basicId: number) => setFocusedBasic(basicId)}
+                    />
+                );
             case "division":
-                return <DivisionTemplate focusedBasic={focusedBasic} onNextBasic={setNextBasicFocused} setBasicFocused={(basicId: number)=>setFocusedBasic(basicId)}/>;
+                return (
+                    <DivisionTemplate
+                        focusedBasic={focusedBasic}
+                        onNextBasic={setNextBasicFocused}
+                        setBasicFocused={(basicId: number) => setFocusedBasic(basicId)}
+                    />
+                );
         }
     };
 
-    return <div className="template">
-        {getOperationTemplate()}
-    </div>;
+    return <div className="template">{getOperationTemplate()}</div>;
 };
 
 export default Template;
