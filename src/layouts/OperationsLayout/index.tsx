@@ -14,7 +14,7 @@ interface IOperationsLayoutProps {
 const OperationsLayout = (props: IOperationsLayoutProps) => {
     const { layoutTitle, operationType } = props;
     const [templatesIds, setTemplatesIds] = useState([`${operationType}-0`]);
-    const { setActiveCell, setActiveTemplate } = useActions();
+    const { setActiveCell, setActiveTemplate, setDefaultFocus } = useActions();
     const { activeTemplate } = useTypedSelector((state) => state.controll);
     const addNewTemplate = () => {
         const newId = createNewId();
@@ -30,7 +30,7 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
     };
     const removeTemplate = (id: string) => {
         setTemplatesIds((prev) => prev.filter((templateId) => templateId !== id));
-        setActiveCell(0);
+        setDefaultFocus();
     };
 
     return (

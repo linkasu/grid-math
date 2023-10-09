@@ -12,3 +12,9 @@ export const setActiveTemplate = (id: string) => {
         dispatch({type: ControllActionType.SET_FOCUS_TEMPLATE, payload: id})
     }
 }
+
+export const setDefaultFocus = () => {
+    return (dispatch: Dispatch<ControllActions>) => {
+        dispatch({type: ControllActionType.SET_DEFAULT_FOCUS})
+    }
+}

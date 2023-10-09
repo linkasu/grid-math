@@ -18,11 +18,15 @@ export interface SetFocusTemplateAction {
     payload: string;
 }
 
-export type ControllActions = SetFocusCellAction | SetFocusTemplateAction;
+export interface SetDefaultFocus {
+    type: ControllActionType.SET_DEFAULT_FOCUS;
+}
+
+export type ControllActions = SetFocusCellAction | SetFocusTemplateAction | SetDefaultFocus;
+
 
 export enum ControllActionType {
     SET_FOCUS_CELL = "SET_FOCUS_CELL",
     SET_FOCUS_TEMPLATE = "SET_FOCUS_TEMPLATE",
-    FOCUS_PREV_CELL = "FOCUS_PREV_CELL",
-    FOCUS_NEXT_CELL = "FOCUS_NEXT_CELL",
+    SET_DEFAULT_FOCUS = "SET_DEFAULT_FOCUS"
 }
