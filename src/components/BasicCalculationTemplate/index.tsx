@@ -17,7 +17,7 @@ interface IBasicCalculationTemplateProps {
     digitsInResult?: number;
     isFocusedBasic?: boolean;
     setBasicFocused?: () => void;
-    setNextBasicFocused?: (movTo: "prev" | "next") => void;
+    setNextBasicFocused?: (moveTo: "prev" | "next") => void;
     basicIndex: number;
 }
 
