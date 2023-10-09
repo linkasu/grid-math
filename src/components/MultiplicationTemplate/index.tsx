@@ -3,13 +3,12 @@ import BasicCalculationTemplate from "../BasicCalculationTemplate";
 import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
 import { TemplateType } from "../Template";
 
-interface IMultiplicationTemplateProps extends TemplateType {
-}
+interface IMultiplicationTemplateProps extends TemplateType {}
 
 const MAX_DIGIT_NUMBER = 3;
 
 const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
-    const { focusedBasic, onNextBasic, setBasicFocused } = props;
+    const { focusedBasic, onNextBasic, setBasicFocused, isFocusedTemplate } = props;
 
     return (
         <div className="template">
@@ -17,8 +16,8 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 calculatedNumbersCount={CALCULATED_NUMBERS_COUNT}
                 operation={"multiplication"}
                 digitsInRow={MAX_DIGIT_NUMBER}
-                isFocusedBasic={focusedBasic === 0}
-                setBasicFocused={()=>setBasicFocused(0)}
+                isFocusedBasic={focusedBasic === 0 && isFocusedTemplate}
+                setBasicFocused={() => setBasicFocused(0)}
                 setNextBasicFocused={onNextBasic}
                 basicIndex={0}
             />
@@ -28,7 +27,7 @@ const MultiplicationTemplate = (props: IMultiplicationTemplateProps) => {
                 digitsInRow={MAX_DIGIT_NUMBER + 1}
                 isHelperCalculation
                 digitsInResult={MAX_DIGIT_NUMBER * 2 + 1}
-                isFocusedBasic={focusedBasic === 1}
+                isFocusedBasic={focusedBasic === 1 && isFocusedTemplate}
                 setBasicFocused={() => {
                     setBasicFocused(1);
                 }}

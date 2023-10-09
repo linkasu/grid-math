@@ -9,7 +9,7 @@ interface IAdditionTemplateProps extends TemplateType {
 const MAX_DIGIT_NUMBER = 5;
 
 const AdditionTemplate = (props: IAdditionTemplateProps) => {
-    const { focusedBasic, onNextBasic, setBasicFocused } = props;
+    const { isFocusedTemplate } = props;
 
     return (
         <BasicCalculationTemplate
@@ -18,7 +18,7 @@ const AdditionTemplate = (props: IAdditionTemplateProps) => {
             digitsInRow={MAX_DIGIT_NUMBER}
             digitsInResult={MAX_DIGIT_NUMBER + 1}
             basicIndex={0}
-            isFocusedBasic={true}
+            isFocusedBasic={isFocusedTemplate}
         />
     );
 };

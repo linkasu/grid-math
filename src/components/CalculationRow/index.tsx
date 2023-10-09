@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import "./CalculationRow.scss";
 import classNames from "classnames";
 import CalculationCell from "../CalculationCell/CalculationCell";
-import { controll } from "../../utils/ControlUtils";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 
 export type RowType = "number" | "calculation" | "helper" | "result";
 
@@ -27,28 +28,26 @@ const CalculationRow = (props: ICalculationRowProps) => {
         focusNextRow,
     } = props;
     const rowCellsCount = digitsInRow + offsetCells;
+    const { setActiveCell } = useActions();
+
+    const { activeCell } = useTypedSelector((state) => state.controll);
 
     const onRowClick = () => {
         if (!isFocusedRow) setRowFocused();
     };
 
-    const [focusedCellIndex, setFocusedCellIndex] = useState(controll.activeCell);
     const onCellClick = (index: number) => {
         onRowClick();
-        controll.setActiveCell(index)
-        changeFocusedCell(index);
+        setActiveCell(index);
     };
-    const changeFocusedCell = (index: number) => setFocusedCellIndex(index);
     const focuseNextCell = (moveFocus: "left" | "right") => {
         if (moveFocus === "left") {
-            if (focusedCellIndex > 0) {
-                controll.setActiveCell(focusedCellIndex-1)
-                setFocusedCellIndex((prev) => prev - 1);
+            if (activeCell > 0) {
+                setActiveCell(activeCell - 1);
             }
         } else {
-            if (focusedCellIndex + 1 < digitsInRow) {
-                controll.setActiveCell(focusedCellIndex+1)
-                setFocusedCellIndex((prev) => prev + 1);
+            if (activeCell + 1 < digitsInRow) {
+                setActiveCell(activeCell + 1);
             }
         }
     };
@@ -65,7 +64,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
                 <CalculationCell
                     key={i}
                     rowType={rowType}
-                    isFocused={i === controll.activeCell && isFocusedRow}
+                    isFocused={i === activeCell && isFocusedRow}
                     focusNextCell={focuseNextCell}
                     onCellEnter={() => {
                         onCellClick(i);
