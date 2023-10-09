@@ -11,6 +11,9 @@ const MAX_DIGIT_NUMBER = 5;
 const DivisionTemplate = (props: IDivisionTemplateProps) => {
     const { focusedBasic, onNextBasic, setBasicFocused, isFocusedTemplate = false } = props;
 
+    const moveToSides = (moveTo: "left" | "right") =>
+        setBasicFocused(moveTo === "left" ? 0 : MAX_DIGIT_NUMBER);
+
     return (
         <div className="template__division">
             <div className="template">
