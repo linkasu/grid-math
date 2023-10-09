@@ -48,7 +48,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
     } = props;
 
     const needOffsetRight = isHelperCalculation && operation === "addition";
-    const defaultState = isHelperCalculation && operation!=="subtraction" ? -0.5 : 0;
+    const defaultState = isHelperCalculation && operation !== "subtraction" ? -0.5 : 0;
     const [focusedRow, setFocusedRow] = useState(defaultState);
 
     const defaultInterval = isHelperCalculation ? 0.5 : 1;

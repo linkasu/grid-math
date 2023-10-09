@@ -3,6 +3,7 @@ import "./OperationsLayout.scss";
 import TemplateContainer from "../../components/TemplateContainer";
 import { OperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
 import Template from "../../components/Template";
+import { controll } from "../../utils/ControlUtils";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
@@ -12,15 +13,20 @@ interface IOperationsLayoutProps {
 const OperationsLayout = (props: IOperationsLayoutProps) => {
     const { layoutTitle, operationType } = props;
     const [templatesIds, setTemplatesIds] = useState([`${operationType}-0`]);
-    const increaseTemplateCount = () => setTemplatesIds((prev) => [...prev, createNewId()]);
+    const increaseTemplateCount = () => {
+        setTemplatesIds((prev) => [...prev, createNewId()]);
+        controll.setActiveCell(0);
+    };
     const createNewId = (): string => {
         const idsCount = templatesIds.length;
         const dividerIndex = templatesIds[idsCount - 1].indexOf("-");
         const lastIdNumber = Number(templatesIds[idsCount - 1].slice(dividerIndex + 1)) + 1;
         return `${operationType}-${lastIdNumber}`;
     };
-    const decreaseTemplateCount = (id: string) =>
+    const decreaseTemplateCount = (id: string) => {
         setTemplatesIds((prev) => prev.filter((templateId) => templateId !== id));
+        controll.setActiveCell(0);
+    }
 
     return (
         <div className="operations-layout">
