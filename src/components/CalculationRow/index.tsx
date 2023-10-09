@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./CalculationRow.scss";
 import classNames from "classnames";
 import CalculationCell from "../CalculationCell/CalculationCell";
@@ -35,6 +35,12 @@ const CalculationRow = (props: ICalculationRowProps) => {
     const onRowClick = () => {
         if (!isFocusedRow) setRowFocused();
     };
+
+    useEffect(() => {
+        if (isFocusedRow && activeCell + 1 > digitsInRow) {
+            setActiveCell(digitsInRow - 1);
+        }
+    }, [isFocusedRow]);
 
     const onCellClick = (index: number) => {
         onRowClick();

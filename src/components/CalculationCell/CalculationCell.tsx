@@ -29,13 +29,13 @@ const CalculationCell = (props: ICalculationCellProps) => {
         if (rowType === "helper") return;
         focusNextCell(rowType === "number" ? "right" : "left");
     };
-    const onKeyUp = (e:React.KeyboardEvent<HTMLInputElement>) => {
-        if(e.key==="ArrowRight") {
+    const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "ArrowRight") {
             focusNextCell("right");
-        } else if (e.key==="ArrowLeft") {
+        } else if (e.key === "ArrowLeft") {
             focusNextCell("left");
         }
-    }
+    };
 
     const controlInputValues = (value: string) => {
         const pattern = rowType === "helper" ? new RegExp(/[0-9\.]/) : new RegExp(/[0-9]/);

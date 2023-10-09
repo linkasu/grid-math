@@ -4,14 +4,12 @@ import BasicCalculationTemplate from "../BasicCalculationTemplate";
 import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
 import { TemplateType } from "../Template";
 
-interface IDivisionTemplateProps extends TemplateType {
-    isFocusedTemplate?: boolean;
-}
+interface IDivisionTemplateProps extends TemplateType {}
 
 const MAX_DIGIT_NUMBER = 5;
 
 const DivisionTemplate = (props: IDivisionTemplateProps) => {
-    const { focusedBasic, onNextBasic, setBasicFocused, isFocusedTemplate=false } = props;
+    const { focusedBasic, onNextBasic, setBasicFocused, isFocusedTemplate = false } = props;
 
     return (
         <div className="template__division">
