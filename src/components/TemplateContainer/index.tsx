@@ -5,7 +5,7 @@ import { OperationType } from "../BasicCalculationTemplate";
 import DeleteIcon from "../../icons/DeleteIcon";
 
 interface ITemplateContainerProps {
-    template: ReactElement;
+    templateElement: ReactElement;
     id: string;
     operation: OperationType;
     canRemoveTemplate: boolean;
@@ -13,7 +13,7 @@ interface ITemplateContainerProps {
 }
 
 const TemplateContainer = (props: ITemplateContainerProps) => {
-    const { template, operation, canRemoveTemplate, onRemoveTemplate, id } = props;
+    const { templateElement, operation, canRemoveTemplate, onRemoveTemplate, id } = props;
     const onClickRemove = () => onRemoveTemplate(id);
     return (
         <div
@@ -23,7 +23,7 @@ const TemplateContainer = (props: ITemplateContainerProps) => {
                 template__container_large: operation === "division",
             })}
         >
-            {template}
+            {templateElement}
             <button
                 aria-label="Удалить шаблон"
                 onClick={onClickRemove}

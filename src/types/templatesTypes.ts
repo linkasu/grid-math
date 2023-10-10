@@ -2,10 +2,25 @@ import { OperationType } from "../components/BasicCalculationTemplate";
 import { TemplateProps } from "../components/Template";
 
 export interface ITemplatesState {
-    addition: string[];
-    subtraction: string[];
-    multiplication: string[];
-    division: string[];
+    addition: ITemplate[];
+    subtraction: ITemplate[];
+    multiplication: ITemplate[];
+    division: ITemplate[];
+}
+
+export interface ITemplate {
+    operation: OperationType,
+    id: string,
+    basics: IBasic[]
+}
+
+export interface IBasic {
+    id: string;
+    operation: OperationType;
+    digitsInRow: number;
+    calculatedNumbersCount: number;
+    isHelperCalculation?: boolean;
+    digitsInResult?: number;
 }
 
 export interface ITemplatesAction {
@@ -19,7 +34,7 @@ export interface AddTemplateAction {
 }
 export interface RemoveTemplateAction {
     type: TemplatesActionType.REMOVE_TEMPLATE;
-    payload: TemplateProps;
+    payload: ITemplate;
 }
 
 export interface GetState {

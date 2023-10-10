@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./OperationsLayout.scss";
 import TemplateContainer from "../../components/TemplateContainer";
 import { OperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
@@ -13,20 +13,25 @@ interface IOperationsLayoutProps {
 
 const OperationsLayout = (props: IOperationsLayoutProps) => {
     const { layoutTitle, operationType } = props;
-    const { setActiveCell, setActiveTemplate, setDefaultFocus } = useActions();
+    const { setActiveCell, setActiveTemplate, setActiveBasic } = useActions();
     const { addNewTemplate, removeTemplate } = useActions();
     const { activeTemplate } = useTypedSelector((state) => state.controll);
-    const templatesIds = useTypedSelector((state) => state.templates[operationType]);
-    //const getLastTempplateId = () => templatesIds[templatesIds.length];
+    const templates = useTypedSelector((state) => state.templates[operationType]);
+    const getLastTempplate = () => templates[templates.length - 1];
+    useEffect(() => {
+        if (templates.length > 1) {
+            const template = getLastTempplate();
+            setActiveTemplate(template);
+            setActiveBasic(template.basics[0].id);
+            setActiveCell(0);
+        }
+    }, [templates.length]);
 
-    const onAddTemplate = () => {
-        addNewTemplate(operationType);
-        //setActiveTemplate(getLastTempplateId());
-        setActiveCell(0);
-    };
+    const onAddTemplate = () => addNewTemplate(operationType);
+
     const onRemoveTemplate = (id: string) => {
-        removeTemplate({ operation: operationType, id: id, isFocusedTemplate: false });
-        setDefaultFocus();
+        const template = templates.find((t) => t.id === id);
+        !!template && removeTemplate(template);
     };
 
     return (
@@ -44,17 +49,16 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                 </button>
             </div>
             <div className="operations-layout__templates container">
-                {templatesIds.map((id, index) => (
+                {templates.map((template, index) => (
                     <TemplateContainer
                         onRemoveTemplate={onRemoveTemplate}
                         canRemoveTemplate={index > 0}
-                        id={id}
-                        key={id}
-                        template={
+                        id={template.id}
+                        key={template.id}
+                        templateElement={
                             <Template
-                                id={id}
-                                operation={operationType}
-                                isFocusedTemplate={activeTemplate === id}
+                                template={template}
+                                isFocusedTemplate={activeTemplate.id === template.id}
                             />
                         }
                         operation={operationType}

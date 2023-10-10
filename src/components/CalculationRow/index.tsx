@@ -15,6 +15,7 @@ interface ICalculationRowProps {
     isFocusedRow?: boolean;
     setRowFocused: () => void;
     focusNextRow: (moveFocus: "up" | "down") => void;
+    onMoveToSide?: (side: "right" | "left") => void;
 }
 
 const CalculationRow = (props: ICalculationRowProps) => {
@@ -26,6 +27,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
         isFocusedRow = false,
         setRowFocused,
         focusNextRow,
+        onMoveToSide,
     } = props;
     const rowCellsCount = digitsInRow + offsetCells;
     const { setActiveCell } = useActions();
@@ -50,10 +52,14 @@ const CalculationRow = (props: ICalculationRowProps) => {
         if (moveFocus === "left") {
             if (activeCell > 0) {
                 setActiveCell(activeCell - 1);
+            } else {
+                onMoveToSide && onMoveToSide(moveFocus);
             }
         } else {
             if (activeCell + 1 < digitsInRow) {
                 setActiveCell(activeCell + 1);
+            } else {
+                onMoveToSide && onMoveToSide(moveFocus);
             }
         }
     };

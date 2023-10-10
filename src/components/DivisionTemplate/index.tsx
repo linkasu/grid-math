@@ -1,46 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DivisionTemplate.scss";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
-import { CALCULATED_NUMBERS_COUNT } from "../../layouts/MainPageLayout";
 import { TemplateType } from "../Template";
+import { ITemplate } from "../../types/templatesTypes";
+import { MAX_DIGIT_NUMBER } from "../../types/DefaultTemplates";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-interface IDivisionTemplateProps extends TemplateType {}
-
-const MAX_DIGIT_NUMBER = 5;
+interface IDivisionTemplateProps extends TemplateType {
+    template: ITemplate;
+}
 
 const DivisionTemplate = (props: IDivisionTemplateProps) => {
-    const { focusedBasic, onNextBasic, setBasicFocused, isFocusedTemplate = false } = props;
+    const { template } = props;
+    const { activeBasic } = useTypedSelector((state) => state.controll);
+    const { setActiveBasic } = useActions();
+    const [activeLeftBasic, setLeftActiveBasic] = useState(template.basics[0].id);
 
-    const moveToSides = (moveTo: "left" | "right") =>
-        setBasicFocused(moveTo === "left" ? 0 : MAX_DIGIT_NUMBER);
+    const moveToTemplateSide = (sideToMove: "right" | "left") =>
+        sideToMove === "right" ? moveToRightSide() : moveToLeftSide();
+    const moveToRightSide = () => {
+        if (activeBasic !== template.basics[MAX_DIGIT_NUMBER].id) {
+            setLeftActiveBasic(activeBasic);
+        }
+        setActiveBasic(template.basics[MAX_DIGIT_NUMBER].id);
+    };
+    const moveToLeftSide = () => setActiveBasic(activeLeftBasic);
 
     return (
         <div className="template__division">
             <div className="template">
-                {[...Array(MAX_DIGIT_NUMBER)].map((e, i) => (
-                    <BasicCalculationTemplate
-                        key={`division-helper-${i}`}
-                        calculatedNumbersCount={CALCULATED_NUMBERS_COUNT}
-                        operation={"subtraction"}
-                        digitsInRow={MAX_DIGIT_NUMBER}
-                        isHelperCalculation
-                        digitsInResult={i + 1 === MAX_DIGIT_NUMBER ? MAX_DIGIT_NUMBER : 0}
-                        isFocusedBasic={i === focusedBasic && isFocusedTemplate}
-                        setBasicFocused={() => {
-                            setBasicFocused(i);
-                        }}
-                        basicIndex={i}
-                        setNextBasicFocused={onNextBasic}
-                    />
-                ))}
+                {template.basics.map((basic, i) => {
+                    return (
+                        i !== template.basics.length - 1 && (
+                            <BasicCalculationTemplate
+                                key={basic.id}
+                                basic={basic}
+                                basicIndex={i}
+                                onMoveToSide={moveToTemplateSide}
+                            />
+                        )
+                    );
+                })}
             </div>
             <BasicCalculationTemplate
-                calculatedNumbersCount={CALCULATED_NUMBERS_COUNT}
-                operation="division"
-                digitsInRow={MAX_DIGIT_NUMBER}
-                setBasicFocused={() => setBasicFocused(MAX_DIGIT_NUMBER)}
-                isFocusedBasic={focusedBasic === MAX_DIGIT_NUMBER && isFocusedTemplate}
+                basic={template.basics[MAX_DIGIT_NUMBER]}
                 basicIndex={MAX_DIGIT_NUMBER}
+                onMoveToSide={moveToTemplateSide}
             />
         </div>
     );

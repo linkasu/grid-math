@@ -9,10 +9,6 @@ export type Operation = {
     title: string;
 };
 
-export const CALCULATED_NUMBERS_COUNT = 2;
-export const MAX_CALCULATION_ROWS = 2;
-export const MAX_MULTIPLICATION_CALCULATION_ROWS = 3;
-
 const operations: Operation[] = [
     {
         name: "addition",

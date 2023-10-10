@@ -6,19 +6,16 @@ import MinusIcon from "../../icons/MinusIcon";
 import MultiplyIcon from "../../icons/MultiplyIcon";
 import CalculationRow from "../CalculationRow";
 import DivideIcon from "../../icons/DivideIcon";
+import { IBasic } from "../../types/templatesTypes";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 
 export type OperationType = "addition" | "subtraction" | "multiplication" | "division";
 
 interface IBasicCalculationTemplateProps {
-    operation: OperationType;
-    digitsInRow: number;
-    calculatedNumbersCount: number;
-    isHelperCalculation?: boolean;
-    digitsInResult?: number;
-    isFocusedBasic?: boolean;
-    setBasicFocused?: () => void;
-    setNextBasicFocused?: (moveTo: "prev" | "next") => void;
+    basic: IBasic;
     basicIndex: number;
+    onMoveToSide?: (side: "right" | "left") => void;
 }
 
 export const getTemplateSymbol = (operation: OperationType) => {
@@ -35,21 +32,23 @@ export const getTemplateSymbol = (operation: OperationType) => {
 };
 
 const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
+    const { basic, basicIndex, onMoveToSide } = props;
+
     const {
+        id,
         operation,
         digitsInRow,
         calculatedNumbersCount,
         isHelperCalculation = false,
         digitsInResult = 0,
-        isFocusedBasic = false,
-        setBasicFocused,
-        setNextBasicFocused,
-        basicIndex,
-    } = props;
+    } = basic;
 
     const needOffsetRight = isHelperCalculation && operation === "addition";
     const defaultState = isHelperCalculation && operation !== "subtraction" ? -0.5 : 0;
     const [focusedRow, setFocusedRow] = useState(defaultState);
+
+    const { activeBasic } = useTypedSelector((state) => state.controll);
+    const { setActiveBasic, setNextBasic, setPreviosBasic } = useActions();
 
     const defaultInterval = isHelperCalculation ? 0.5 : 1;
     const minimumRow = operation === "division" ? 0 : -0.5;
@@ -61,8 +60,8 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
         return rowId === 0 && !isHelperCalculation;
     };
     const onRowClick = (rowId: number) => {
-        if (!isFocusedBasic) {
-            setBasicFocused && setBasicFocused();
+        if (activeBasic !== id) {
+            setActiveBasic(id);
         }
         setFocusedRow(rowId);
     };
@@ -73,7 +72,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
         if (isFirstRow(rowId)) {
             onRowClick(rowId - 0.5);
         } else if (rowId - defaultInterval < minimumRow) {
-            setNextBasicFocused && setNextBasicFocused("prev");
+            setPreviosBasic(id);
         } else {
             onRowClick(rowId - (isResultRow(rowId) ? 1 : defaultInterval));
         }
@@ -84,7 +83,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
         if (isFirstRow(rowId + 0.5)) {
             onRowClick(rowId + 0.5);
         } else if (rowId + 1 >= calculatedNumbersCount + resultRowCount) {
-            setNextBasicFocused && setNextBasicFocused("next");
+            setNextBasic(id);
         } else {
             onRowClick(rowId + (isResultRow(rowId + 1) ? 1 : defaultInterval));
         }
@@ -96,17 +95,19 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                 <CalculationRow
                     rowType="number"
                     digitsInRow={digitsInRow}
-                    isFocusedRow={0 === focusedRow && isFocusedBasic}
+                    isFocusedRow={0 === focusedRow && activeBasic === id}
                     setRowFocused={() => onRowClick(0)}
                     focusNextRow={moveFocusToNextRow}
+                    onMoveToSide={onMoveToSide}
                 />
                 <div className="template__division-divide-line"></div>
                 <CalculationRow
                     rowType="result"
                     digitsInRow={digitsInRow}
-                    isFocusedRow={1 === focusedRow && isFocusedBasic}
+                    isFocusedRow={1 === focusedRow && activeBasic === id}
                     setRowFocused={() => onRowClick(1)}
                     focusNextRow={moveFocusToNextRow}
+                    onMoveToSide={onMoveToSide}
                 />
             </div>
         );
@@ -121,9 +122,10 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                             digitsInRow={digitsInRow}
                             rowType={"helper"}
                             offsetCells={needOffsetRight ? i : 0}
-                            isFocusedRow={i - 0.5 === focusedRow && isFocusedBasic}
+                            isFocusedRow={i - 0.5 === focusedRow && activeBasic === id}
                             setRowFocused={() => onRowClick(i - 0.5)}
                             focusNextRow={moveFocusToNextRow}
+                            onMoveToSide={onMoveToSide}
                         />
                     )}
                     <CalculationRow
@@ -133,9 +135,10 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                             ["calculationRow_last"]: i + 1 === calculatedNumbersCount,
                         })}
                         offsetCells={needOffsetRight && i !== calculatedNumbersCount ? i : 0}
-                        isFocusedRow={i === focusedRow && isFocusedBasic}
+                        isFocusedRow={i === focusedRow && activeBasic === id}
                         setRowFocused={() => onRowClick(i)}
                         focusNextRow={moveFocusToNextRow}
+                        onMoveToSide={onMoveToSide}
                     />
                     {i === 0 && (
                         <div
@@ -149,11 +152,12 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                     )}
                     {isResultRow(i + 1) && (
                         <CalculationRow
-                            isFocusedRow={i + 1 === focusedRow && isFocusedBasic}
+                            isFocusedRow={i + 1 === focusedRow && activeBasic === id}
                             rowType={"result"}
                             digitsInRow={digitsInResult}
                             setRowFocused={() => onRowClick(i + 1)}
                             focusNextRow={moveFocusToNextRow}
+                            onMoveToSide={onMoveToSide}
                         />
                     )}
                 </div>

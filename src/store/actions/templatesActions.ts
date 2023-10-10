@@ -1,6 +1,5 @@
 import { Dispatch } from "redux";
-import { TemplatesActionType, TemplatesActions } from "../../types/templatesTypes";
-import { TemplateProps } from "../../components/Template";
+import { ITemplate, TemplatesActionType, TemplatesActions } from "../../types/templatesTypes";
 import { OperationType } from "../../components/BasicCalculationTemplate";
 
 export const addNewTemplate = (operation: OperationType) => {
@@ -9,7 +8,7 @@ export const addNewTemplate = (operation: OperationType) => {
     };
 };
 
-export const removeTemplate = (template: TemplateProps) => {
+export const removeTemplate = (template: ITemplate) => {
     return (dispatch: Dispatch<TemplatesActions>) => {
         dispatch({ type: TemplatesActionType.REMOVE_TEMPLATE, payload: template });
     };
