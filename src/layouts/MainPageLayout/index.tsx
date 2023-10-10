@@ -1,11 +1,7 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import "./MainPageLayout.scss";
 import OperationsLayout from "../OperationsLayout";
-import AdditionTemplate from "../../components/AdditionTemplate";
-import SubtractionTemplate from "../../components/SubtractionTemplate";
-import MultiplicationTemplate from "../../components/MultiplicationTemplate";
 import { OperationType } from "../../components/BasicCalculationTemplate";
-import DivisionTemplate from "../../components/DivisionTemplate";
 import ScaleSwitch from "../../components/ScaleSwitch";
 
 export type Operation = {

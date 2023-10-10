@@ -13,23 +13,19 @@ interface IOperationsLayoutProps {
 
 const OperationsLayout = (props: IOperationsLayoutProps) => {
     const { layoutTitle, operationType } = props;
-    const [templatesIds, setTemplatesIds] = useState([`${operationType}-0`]);
     const { setActiveCell, setActiveTemplate, setDefaultFocus } = useActions();
+    const { addNewTemplate, removeTemplate } = useActions();
     const { activeTemplate } = useTypedSelector((state) => state.controll);
-    const addNewTemplate = () => {
-        const newId = createNewId();
-        setTemplatesIds((prev) => [...prev, newId]);
-        setActiveTemplate(newId);
+    const templatesIds = useTypedSelector((state) => state.templates[operationType]);
+    //const getLastTempplateId = () => templatesIds[templatesIds.length];
+
+    const onAddTemplate = () => {
+        addNewTemplate(operationType);
+        //setActiveTemplate(getLastTempplateId());
         setActiveCell(0);
     };
-    const createNewId = (): string => {
-        const idsCount = templatesIds.length;
-        const dividerIndex = templatesIds[idsCount - 1].indexOf("-");
-        const lastIdNumber = Number(templatesIds[idsCount - 1].slice(dividerIndex + 1)) + 1;
-        return `${operationType}-${lastIdNumber}`;
-    };
-    const removeTemplate = (id: string) => {
-        setTemplatesIds((prev) => prev.filter((templateId) => templateId !== id));
+    const onRemoveTemplate = (id: string) => {
+        removeTemplate({ operation: operationType, id: id, isFocusedTemplate: false });
         setDefaultFocus();
     };
 
@@ -40,7 +36,7 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                     <h2>{layoutTitle}</h2> {getTemplateSymbol(operationType)}
                 </span>
                 <button
-                    onClick={addNewTemplate}
+                    onClick={onAddTemplate}
                     aria-label="Добавить шаблон"
                     className="operations-layout__add-template"
                 >
@@ -50,7 +46,7 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
             <div className="operations-layout__templates container">
                 {templatesIds.map((id, index) => (
                     <TemplateContainer
-                        onRemoveTemplate={removeTemplate}
+                        onRemoveTemplate={onRemoveTemplate}
                         canRemoveTemplate={index > 0}
                         id={id}
                         key={id}

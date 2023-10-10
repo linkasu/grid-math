@@ -1,10 +1,9 @@
 import { ControllActionType, IControllAction, IControllState } from "../../types/controllTypes";
-
-const DEFAULT_ACTIVE_TEMPLATE_ID = "addition-0";
+import { ADDITION_FIRST_TEMPLATE_ID } from "./templatesReducer";
 
 const initialState: IControllState = {
     activeCell: 0,
-    activeTemplate: DEFAULT_ACTIVE_TEMPLATE_ID,
+    activeTemplate: ADDITION_FIRST_TEMPLATE_ID,
 };
 
 export const controllReducer = (
