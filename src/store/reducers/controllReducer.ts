@@ -36,6 +36,9 @@ export const controllReducer = (
             }
             return state;
         }
+        case ControllActionType.SWITCH_FOCUS_SIDE: {
+            return { ...state, activeBasic: action.payload.basicId, activeCell: action.payload.activeCell };
+        }
         case ControllActionType.SET_FOCUS_TEMPLATE:
             return { ...state, activeTemplate: action.payload };
         case ControllActionType.SET_DEFAULT_FOCUS:

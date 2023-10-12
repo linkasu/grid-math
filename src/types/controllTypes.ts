@@ -31,6 +31,14 @@ export interface SetNextBasicAction {
     payload: string;
 }
 
+export interface SwitchActiveSides {
+    type: ControllActionType.SWITCH_FOCUS_SIDE;
+    payload: {
+        basicId: string;
+        activeCell: number;
+    }
+}
+
 export interface SetFocusTemplateAction {
     type: ControllActionType.SET_FOCUS_TEMPLATE;
     payload: ITemplate;
@@ -40,7 +48,7 @@ export interface SetDefaultFocus {
     type: ControllActionType.SET_DEFAULT_FOCUS;
 }
 
-export type ControllActions = SetFocusCellAction | SetFocusBasicAction | SetPreviosBasicAction| SetNextBasicAction | SetFocusTemplateAction | SetDefaultFocus;
+export type ControllActions = SetFocusCellAction | SetFocusBasicAction | SetPreviosBasicAction| SetNextBasicAction | SwitchActiveSides | SetFocusTemplateAction | SetDefaultFocus;
 
 
 export enum ControllActionType {
@@ -48,6 +56,7 @@ export enum ControllActionType {
     SET_FOCUS_BASIC = "SET_FOCUS_BASIC",
     SET_PREV_BASIC = "SET_PREV_BASIC",
     SET_NEXT_BASIC = "SET_NEXT_BASIC",
+    SWITCH_FOCUS_SIDE = "SWITCH_FOCUS_SIDE",
     SET_FOCUS_TEMPLATE = "SET_FOCUS_TEMPLATE",
     SET_DEFAULT_FOCUS = "SET_DEFAULT_FOCUS"
 }

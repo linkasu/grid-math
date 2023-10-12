@@ -14,6 +14,12 @@ export const setActiveBasic = (id: string) => {
     };
 };
 
+export const switchActiveSides = (basicId: string, activeCell: number) => {
+    return (dispatch: Dispatch<ControllActions>) => {
+        dispatch({ type: ControllActionType.SWITCH_FOCUS_SIDE, payload: {basicId: basicId, activeCell: activeCell}});
+    }
+}
+
 export const setPreviosBasic = (id: string) => {
     return (dispatch: Dispatch<ControllActions>) => {
         dispatch({ type: ControllActionType.SET_PREV_BASIC, payload: id });

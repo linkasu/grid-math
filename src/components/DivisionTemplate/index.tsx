@@ -14,18 +14,23 @@ interface IDivisionTemplateProps extends TemplateType {
 const DivisionTemplate = (props: IDivisionTemplateProps) => {
     const { template } = props;
     const { activeBasic } = useTypedSelector((state) => state.controll);
-    const { setActiveBasic } = useActions();
+    const { switchActiveSides } = useActions();
     const [activeLeftBasic, setLeftActiveBasic] = useState(template.basics[0].id);
+    const rightBasic = template.basics[MAX_DIGIT_NUMBER];
 
     const moveToTemplateSide = (sideToMove: "right" | "left") =>
         sideToMove === "right" ? moveToRightSide() : moveToLeftSide();
     const moveToRightSide = () => {
-        if (activeBasic !== template.basics[MAX_DIGIT_NUMBER].id) {
+        if (activeBasic !== rightBasic.id) {
             setLeftActiveBasic(activeBasic);
+            switchActiveSides(rightBasic.id, 0);
         }
-        setActiveBasic(template.basics[MAX_DIGIT_NUMBER].id);
     };
-    const moveToLeftSide = () => setActiveBasic(activeLeftBasic);
+    const moveToLeftSide = () => {
+        if (activeBasic === rightBasic.id) {
+            switchActiveSides(activeLeftBasic, MAX_DIGIT_NUMBER - 1);
+        }
+    };
 
     return (
         <div className="template__division">
@@ -44,7 +49,7 @@ const DivisionTemplate = (props: IDivisionTemplateProps) => {
                 })}
             </div>
             <BasicCalculationTemplate
-                basic={template.basics[MAX_DIGIT_NUMBER]}
+                basic={rightBasic}
                 basicIndex={MAX_DIGIT_NUMBER}
                 onMoveToSide={moveToTemplateSide}
             />
