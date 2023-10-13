@@ -37,15 +37,10 @@ export interface RemoveTemplateAction {
     payload: ITemplate;
 }
 
-export interface GetState {
-    type: TemplatesActionType.GET_STATE;
-}
-
-export type TemplatesActions = AddTemplateAction | RemoveTemplateAction | GetState;
+export type TemplatesActions = AddTemplateAction | RemoveTemplateAction;
 
 export enum TemplatesActionType {
     ADD_TEMPLATE = "ADD_TEMPLATE",
     REMOVE_TEMPLATE = "REMOVE_TEMPLATE",
-    GET_STATE = "GET_STATE",
     SET_DEFAULT_FOCUS = "SET_DEFAULT_FOCUS",
 }

@@ -3,7 +3,7 @@ import "./DivisionTemplate.scss";
 import BasicCalculationTemplate from "../BasicCalculationTemplate";
 import { TemplateType } from "../Template";
 import { ITemplate } from "../../types/templatesTypes";
-import { MAX_DIGIT_NUMBER } from "../../types/DefaultTemplates";
+import { MAX_DIGIT_NUMBER } from "../../store/utils/CreateTemplates";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 

@@ -1,8 +1,9 @@
-import { ADDITION_FIRST_TEMPLATE } from "../../types/DefaultTemplates";
+import { ADDITION_FIRST_TEMPLATE } from "../utils/CreateTemplates";
 import { ControllActionType, IControllAction, IControllState } from "../../types/controllTypes";
 
 const initialState: IControllState = {
     activeCell: 0,
+    activeRowLength: ADDITION_FIRST_TEMPLATE.basics[0].digitsInRow,
     activeBasic: ADDITION_FIRST_TEMPLATE.basics[0].id,
     activeTemplate: ADDITION_FIRST_TEMPLATE,
 };
@@ -14,6 +15,8 @@ export const controllReducer = (
     switch (action.type) {
         case ControllActionType.SET_FOCUS_CELL:
             return { ...state, activeCell: action.payload };
+        case ControllActionType.SET_FOCUS_ROW_LENGTH:
+            return { ...state, activeRowLength: action.payload };
         case ControllActionType.SET_FOCUS_BASIC:
             return { ...state, activeBasic: action.payload };
         case ControllActionType.SET_PREV_BASIC: {
@@ -37,7 +40,11 @@ export const controllReducer = (
             return state;
         }
         case ControllActionType.SWITCH_FOCUS_SIDE: {
-            return { ...state, activeBasic: action.payload.basicId, activeCell: action.payload.activeCell };
+            return {
+                ...state,
+                activeBasic: action.payload.basicId,
+                activeCell: action.payload.activeCell,
+            };
         }
         case ControllActionType.SET_FOCUS_TEMPLATE:
             return { ...state, activeTemplate: action.payload };

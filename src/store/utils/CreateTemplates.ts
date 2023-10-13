@@ -1,4 +1,4 @@
-import { IBasic, ITemplate } from "./templatesTypes";
+import { IBasic, ITemplate } from "../../types/templatesTypes";
 
 export const ADDITION_FIRST_TEMPLATE_ID = "addition-0";
 export const SUBTRACTION_FIRST_TEMPLATE_ID = "subtraction-0";

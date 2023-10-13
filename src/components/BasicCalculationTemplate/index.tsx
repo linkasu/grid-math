@@ -119,9 +119,9 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                 <div key={`${operation}-${i}`}>
                     {(i === 0 || isHelperCalculation) && i !== calculatedNumbersCount && (
                         <CalculationRow
-                            digitsInRow={digitsInRow}
+                            digitsInRow={digitsInRow-1}
                             rowType={"helper"}
-                            offsetCells={needOffsetRight ? i : 0}
+                            offsetCells={needOffsetRight ? i+1 : 1}
                             isFocusedRow={i - 0.5 === focusedRow && activeBasic === id}
                             setRowFocused={() => onRowClick(i - 0.5)}
                             focusNextRow={moveFocusToNextRow}

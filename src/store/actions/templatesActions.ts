@@ -13,9 +13,3 @@ export const removeTemplate = (template: ITemplate) => {
         dispatch({ type: TemplatesActionType.REMOVE_TEMPLATE, payload: template });
     };
 };
-
-export const getTemplatesState = () => {
-    return (dispatch: Dispatch<TemplatesActions>) => {
-        dispatch({ type: TemplatesActionType.GET_STATE });
-    };
-};

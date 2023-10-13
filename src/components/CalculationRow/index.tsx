@@ -30,22 +30,41 @@ const CalculationRow = (props: ICalculationRowProps) => {
         onMoveToSide,
     } = props;
     const rowCellsCount = digitsInRow + offsetCells;
-    const { setActiveCell } = useActions();
+    const { setActiveCell, setActiveRowLength } = useActions();
 
-    const { activeCell } = useTypedSelector((state) => state.controll);
+    const { activeCell, activeRowLength } = useTypedSelector((state) => state.controll);
 
     const onRowClick = () => {
         if (!isFocusedRow) setRowFocused();
     };
 
-    useEffect(() => {
-        if (isFocusedRow && activeCell + 1 > digitsInRow) {
-            setActiveCell(digitsInRow - 1);
+    const onRowFocused = () => {
+        if (rowCellsCount !== activeRowLength || rowType==="helper") {
+            setActiveCell(getNextActiveCellInRow());
+            setActiveRowLength(rowCellsCount);
         }
+    };
+
+    const getNextActiveCellInRow = (): number => {
+        const nextActiveCell = activeCell + (rowCellsCount - activeRowLength);
+        if (nextActiveCell >= digitsInRow) {
+            return digitsInRow - 1;
+        } else if (nextActiveCell < 0) {
+            return 0;
+        } else if (rowType==="helper" && nextActiveCell >= digitsInRow ) {
+            return digitsInRow-2;
+        }
+        return nextActiveCell;
+    };
+
+    useEffect(() => {
+        if (!isFocusedRow) return;
+        onRowFocused();
     }, [isFocusedRow]);
 
     const onCellClick = (index: number) => {
         onRowClick();
+        setActiveRowLength(rowCellsCount);
         setActiveCell(index);
     };
     const focuseNextCell = (moveFocus: "left" | "right") => {

@@ -8,6 +8,12 @@ export const setActiveCell = (index: number) => {
     };
 };
 
+export const setActiveRowLength = (length: number) => {
+    return (dispatch: Dispatch<ControllActions>) => {
+        dispatch({ type: ControllActionType.SET_FOCUS_ROW_LENGTH, payload: length });
+    };
+};
+
 export const setActiveBasic = (id: string) => {
     return (dispatch: Dispatch<ControllActions>) => {
         dispatch({ type: ControllActionType.SET_FOCUS_BASIC, payload: id });

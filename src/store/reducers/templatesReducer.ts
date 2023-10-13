@@ -8,7 +8,7 @@ import {
     createDivisionBasics,
     createMultiplicationBasics,
     createSubtractionBasics,
-} from "../../types/DefaultTemplates";
+} from "../utils/CreateTemplates";
 import {
     ITemplate,
     ITemplatesState,
@@ -69,10 +69,6 @@ export const templatesReducer = (
             );
             return { ...state, [action.payload.operation]: newTemplatesArray };
         }
-        case TemplatesActionType.GET_STATE: {
-            return state;
-        }
-
         default:
             return state;
     }
