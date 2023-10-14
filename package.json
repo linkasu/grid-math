@@ -49,6 +49,7 @@
         "@types/react-redux": "^7.1.27",
         "bootstrap": "^5.3.2",
         "classnames": "^2.3.2",
+        "firebase": "^10.5.0",
         "react": "^18.2.0",
         "react-bootstrap": "^2.8.0",
         "react-dom": "^18.2.0",
