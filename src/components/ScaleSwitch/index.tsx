@@ -30,7 +30,7 @@ const ScaleSwitch = () => {
     };
     return (
         <div className="scaleSwitch">
-            <h6>Увеличить масштаб</h6>
+            <h6>Изменить масштаб</h6>
             <button aria-label="Увеличить масштаб" onClick={decreaseScale}>-</button>
             <button aria-label="Уменьшить масштаб"  onClick={increaseScale}>+</button>
         </div>

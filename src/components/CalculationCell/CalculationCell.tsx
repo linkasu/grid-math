@@ -19,15 +19,20 @@ const CalculationCell = (props: ICalculationCellProps) => {
     useEffect(() => {
         if (isFocused) {
             inputRef.current?.focus();
+            inputRef.current?.select();
         }
     }, [isFocused]);
 
     const onInput = () => {
         const value = inputRef.current?.value;
         if (!value || !value.trim()) return;
-        controlInputValues(value);
-        if (rowType === "helper") return;
-        focusNextCell(rowType === "number" ? "right" : "left");
+        if (isCorrectValue(value)) {
+            if (rowType === "helper") return;
+            focusNextCell(rowType === "number" ? "right" : "left");
+        } else {
+            /* @ts-ignore*/
+            inputRef.current?.value = value.slice(0, -1);
+        }
     };
     const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "ArrowRight") {
@@ -37,13 +42,9 @@ const CalculationCell = (props: ICalculationCellProps) => {
         }
     };
 
-    const controlInputValues = (value: string) => {
-        const pattern = rowType === "helper" ? new RegExp(/[0-9\.]/) : new RegExp(/[0-9]/);
-
-        if (!pattern.test(value)) {
-            /* @ts-ignore*/
-            inputRef.current?.value = value.slice(0, -1);
-        }
+    const isCorrectValue = (value: string): boolean => {
+        const pattern = rowType === "helper" ? new RegExp(/[\d\.]$/) : new RegExp(/[0-9]/);
+        return pattern.test(value) ? true : false;
     };
 
     return (
