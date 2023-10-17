@@ -20,6 +20,12 @@ export const setActiveBasic = (id: string) => {
     };
 };
 
+export const setActiveRowType = (type: "numbers" | "calculations") => {
+    return (dispatch: Dispatch<ControllActions>) => {
+        dispatch({ type: ControllActionType.SET_FOCUS_ROW_TYPE, payload: type });
+    };
+}
+
 export const switchActiveSides = (basicId: string, activeCell: number) => {
     return (dispatch: Dispatch<ControllActions>) => {
         dispatch({ type: ControllActionType.SWITCH_FOCUS_SIDE, payload: {basicId: basicId, activeCell: activeCell}});

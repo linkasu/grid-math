@@ -9,11 +9,6 @@
     flex-wrap: nowrap;
     position: relative;
 
-    &_result {
-        margin-top: 0.5rem;
-        padding-top: 1rem;
-        border-top: 4px solid $fontBlack;
-    }
     &__cell {
         width: 2.5rem;
         height: 2.5rem;
@@ -39,11 +34,35 @@
 
         &_result {
             border-color: $primaryOrange;
+            &:last-child {
+                margin-right: 0.375rem;
+                margin-left: 0;
+            }
+            &:first-child {
+                margin-right: 0;
+            }
+        }
+        &_midCalculations {
+            &:last-child {
+                margin-right: 0.375rem;
+                margin-left: 0;
+            }
+            &:first-child {
+                margin-right: 0;
+            }
         }
 
         &_offset {
             opacity: 0;
         }
+    }
+    &_result {
+        justify-content: flex-start;
+        flex-direction: row-reverse;
+    }
+    &_midCalculations {
+        justify-content: flex-start;
+        flex-direction: row-reverse;
     }
     &_last {
         margin-bottom: 1rem;

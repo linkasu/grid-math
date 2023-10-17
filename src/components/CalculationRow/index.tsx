@@ -5,7 +5,8 @@ import CalculationCell from "../CalculationCell/CalculationCell";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 
-export type RowType = "number" | "calculation" | "helper" | "result";
+export type RowType = "number" | "calculation" | "result" | HelperCells;
+export type HelperCells = "helperForNumbers" | "helperForCalculations";
 
 interface ICalculationRowProps {
     digitsInRow: number;
@@ -16,6 +17,7 @@ interface ICalculationRowProps {
     setRowFocused: () => void;
     focusNextRow: (moveFocus: "up" | "down") => void;
     onMoveToSide?: (side: "right" | "left") => void;
+    isReversedRow?: boolean;
 }
 
 const CalculationRow = (props: ICalculationRowProps) => {
@@ -28,31 +30,63 @@ const CalculationRow = (props: ICalculationRowProps) => {
         setRowFocused,
         focusNextRow,
         onMoveToSide,
+        isReversedRow,
     } = props;
     const rowCellsCount = digitsInRow + offsetCells;
-    const { setActiveCell, setActiveRowLength } = useActions();
+    const { setActiveCell, setActiveRowLength, setActiveRowType } = useActions();
 
-    const { activeCell, activeRowLength } = useTypedSelector((state) => state.controll);
+    const { activeCell, activeRowLength, activeRowType } = useTypedSelector(
+        (state) => state.controll,
+    );
 
     const onRowClick = () => {
         if (!isFocusedRow) setRowFocused();
     };
 
     const onRowFocused = () => {
-        if (rowCellsCount !== activeRowLength || rowType==="helper") {
-            setActiveCell(getNextActiveCellInRow());
+        if (
+            rowCellsCount !== activeRowLength ||
+            rowType === "helperForCalculations" ||
+            rowType === "helperForNumbers" ||
+            isActiveRowTypeChanged()
+        ) {
+            let nextActiveCell = getNextActiveCellInRow();
+            setActiveCell(nextActiveCell);
+            const newRowType =
+                rowType === "number" || rowType === "helperForNumbers" ? "numbers" : "calculations";
+            setActiveRowType(newRowType);
             setActiveRowLength(rowCellsCount);
         }
     };
 
+    const isActiveRowTypeChanged = () => {
+        switch (activeRowType) {
+            case "calculations":
+                return rowType === "number";
+            case "numbers":
+                return (
+                    rowType === "calculation" ||
+                    rowType === "helperForCalculations" ||
+                    rowType === "result"
+                );
+            default:
+                return false;
+        }
+    };
+
     const getNextActiveCellInRow = (): number => {
-        const nextActiveCell = activeCell + (rowCellsCount - activeRowLength);
-        if (nextActiveCell >= digitsInRow) {
-            return digitsInRow - 1;
-        } else if (nextActiveCell < 0) {
-            return 0;
-        } else if (rowType==="helper" && nextActiveCell >= digitsInRow ) {
-            return digitsInRow-2;
+        let nextActiveCell;
+        if (isActiveRowTypeChanged()) {
+            nextActiveCell = isReversedRow
+                ? activeRowLength - 1 - activeCell
+                : rowCellsCount - 1 - activeCell;
+        } else {
+            nextActiveCell = activeCell;
+        }
+        if (nextActiveCell >= rowCellsCount) {
+            return rowCellsCount - 1;
+        } else if (nextActiveCell < offsetCells) {
+            return offsetCells;
         }
         return nextActiveCell;
     };
@@ -65,20 +99,39 @@ const CalculationRow = (props: ICalculationRowProps) => {
     const onCellClick = (index: number) => {
         onRowClick();
         setActiveRowLength(rowCellsCount);
+        setActiveRowType(
+            rowType === "number" || rowType === "helperForNumbers" ? "numbers" : "calculations",
+        );
         setActiveCell(index);
     };
     const focuseNextCell = (moveFocus: "left" | "right") => {
         if (moveFocus === "left") {
-            if (activeCell > 0) {
-                setActiveCell(activeCell - 1);
+            if (!isReversedRow) {
+                if(activeCell > 0) {
+                    setActiveCell(activeCell - 1)
+                } else {
+                    onMoveToSide && onMoveToSide(moveFocus);
+                }
             } else {
-                onMoveToSide && onMoveToSide(moveFocus);
+                if (activeCell + 1 < rowCellsCount) {
+                    setActiveCell(activeCell + 1)
+                } else {
+                    onMoveToSide && onMoveToSide(moveFocus);
+                }
             }
         } else {
-            if (activeCell + 1 < digitsInRow) {
-                setActiveCell(activeCell + 1);
+            if (!isReversedRow) {
+                if(activeCell + 1 < rowCellsCount) {
+                    setActiveCell(activeCell + 1)
+                } else {
+                    onMoveToSide && onMoveToSide(moveFocus);
+                }
             } else {
-                onMoveToSide && onMoveToSide(moveFocus);
+                if (activeCell > offsetCells) {
+                    setActiveCell(activeCell - 1)
+                } else {
+                    onMoveToSide && onMoveToSide(moveFocus);
+                }
             }
         }
     };
@@ -89,6 +142,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
             focusNextRow("down");
         }
     };
+
     return (
         <div className={classNames("calculationRow", className)} onKeyDown={onKeyUp}>
             {[...Array(rowCellsCount)].map((e, i) => (
@@ -101,8 +155,9 @@ const CalculationRow = (props: ICalculationRowProps) => {
                         onCellClick(i);
                     }}
                     isOffsetCell={
-                        (i >= rowCellsCount - offsetCells && offsetCells !== 0) ||
-                        (i === rowCellsCount && rowType === "helper")
+                        i <= offsetCells - 1 &&
+                        offsetCells !== 0 &&
+                        (rowType === "calculation" || rowType === "helperForCalculations")
                     }
                 />
             ))}

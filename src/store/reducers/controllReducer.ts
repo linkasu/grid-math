@@ -4,6 +4,7 @@ import { ControllActionType, IControllAction, IControllState } from "../../types
 const initialState: IControllState = {
     activeCell: 0,
     activeRowLength: ADDITION_FIRST_TEMPLATE.basics[0].digitsInRow,
+    activeRowType: "numbers",
     activeBasic: ADDITION_FIRST_TEMPLATE.basics[0].id,
     activeTemplate: ADDITION_FIRST_TEMPLATE,
 };
@@ -17,6 +18,8 @@ export const controllReducer = (
             return { ...state, activeCell: action.payload };
         case ControllActionType.SET_FOCUS_ROW_LENGTH:
             return { ...state, activeRowLength: action.payload };
+        case ControllActionType.SET_FOCUS_ROW_TYPE:
+            return { ...state, activeRowType: action.payload };
         case ControllActionType.SET_FOCUS_BASIC:
             return { ...state, activeBasic: action.payload };
         case ControllActionType.SET_PREV_BASIC: {

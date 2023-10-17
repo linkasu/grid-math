@@ -3,6 +3,7 @@ import { ITemplate } from "./templatesTypes";
 export interface IControllState {
     activeCell: number;
     activeRowLength: number;
+    activeRowType: "numbers" | "calculations";
     activeBasic: string;
     activeTemplate: ITemplate;
 }
@@ -20,6 +21,11 @@ export interface SetFocusCellAction {
 export interface SetFocusRowLength {
     type: ControllActionType.SET_FOCUS_ROW_LENGTH;
     payload: number;
+}
+
+export interface SetFocusRowTypeAction {
+    type: ControllActionType.SET_FOCUS_ROW_TYPE;
+    payload: "calculations" | "numbers";
 }
 
 export interface SetFocusBasicAction {
@@ -57,6 +63,7 @@ export interface SetDefaultFocus {
 export type ControllActions =
     | SetFocusCellAction
     | SetFocusRowLength
+    |SetFocusRowTypeAction
     | SetFocusBasicAction
     | SetPreviosBasicAction
     | SetNextBasicAction
@@ -67,6 +74,7 @@ export type ControllActions =
 export enum ControllActionType {
     SET_FOCUS_CELL = "SET_FOCUS_CELL",
     SET_FOCUS_ROW_LENGTH = "SET_FOCUS_ROW_LENGTH",
+    SET_FOCUS_ROW_TYPE = "SET_FOCUS_ROW_TYPE",
     SET_FOCUS_BASIC = "SET_FOCUS_BASIC",
     SET_PREV_BASIC = "SET_PREV_BASIC",
     SET_NEXT_BASIC = "SET_NEXT_BASIC",

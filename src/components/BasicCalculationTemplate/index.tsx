@@ -119,13 +119,17 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                 <div key={`${operation}-${i}`}>
                     {(i === 0 || isHelperCalculation) && i !== calculatedNumbersCount && (
                         <CalculationRow
-                            digitsInRow={digitsInRow-1}
-                            rowType={"helper"}
-                            offsetCells={needOffsetRight ? i+1 : 1}
+                            digitsInRow={digitsInRow}
+                            rowType={basicIndex === 0? "helperForNumbers" : "helperForCalculations"}
+                            offsetCells={needOffsetRight ? i : 0}
                             isFocusedRow={i - 0.5 === focusedRow && activeBasic === id}
                             setRowFocused={() => onRowClick(i - 0.5)}
                             focusNextRow={moveFocusToNextRow}
                             onMoveToSide={onMoveToSide}
+                            className={classNames({
+                                ["calculationRow_midCalculations"]: basicIndex > 0,
+                            })}
+                            isReversedRow={basicIndex>0}
                         />
                     )}
                     <CalculationRow
@@ -133,12 +137,14 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                         rowType={basicIndex > 0 ? "calculation" : "number"}
                         className={classNames({
                             ["calculationRow_last"]: i + 1 === calculatedNumbersCount,
+                            ["calculationRow_midCalculations"]: basicIndex > 0,
                         })}
                         offsetCells={needOffsetRight && i !== calculatedNumbersCount ? i : 0}
                         isFocusedRow={i === focusedRow && activeBasic === id}
                         setRowFocused={() => onRowClick(i)}
                         focusNextRow={moveFocusToNextRow}
                         onMoveToSide={onMoveToSide}
+                        isReversedRow={basicIndex>0}
                     />
                     {i === 0 && (
                         <div
@@ -158,6 +164,8 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                             setRowFocused={() => onRowClick(i + 1)}
                             focusNextRow={moveFocusToNextRow}
                             onMoveToSide={onMoveToSide}
+                            className="calculationRow_result"
+                            isReversedRow
                         />
                     )}
                 </div>

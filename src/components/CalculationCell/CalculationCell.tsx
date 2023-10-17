@@ -14,7 +14,7 @@ const CalculationCell = (props: ICalculationCellProps) => {
     const { rowType, isOffsetCell = false, isFocused = false, onCellEnter, focusNextCell } = props;
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const maxLength = rowType === "helper" ? 3 : 1;
+    const maxLength = (rowType === "helperForCalculations" || rowType === "helperForNumbers") ? 3 : 1;
 
     useEffect(() => {
         if (isFocused) {
@@ -27,7 +27,7 @@ const CalculationCell = (props: ICalculationCellProps) => {
         const value = inputRef.current?.value;
         if (!value || !value.trim()) return;
         if (isCorrectValue(value)) {
-            if (rowType === "helper") return;
+            if (rowType === "helperForCalculations" || rowType === "helperForNumbers") return;
             focusNextCell(rowType === "number" ? "right" : "left");
         } else {
             /* @ts-ignore*/
@@ -43,7 +43,7 @@ const CalculationCell = (props: ICalculationCellProps) => {
     };
 
     const isCorrectValue = (value: string): boolean => {
-        const pattern = rowType === "helper" ? new RegExp(/[\d\.]$/) : new RegExp(/[0-9]/);
+        const pattern = rowType === ("helperForCalculations" || rowType === "helperForNumbers") ? new RegExp(/[\d\.]$/) : new RegExp(/[0-9]/);
         return pattern.test(value) ? true : false;
     };
 
@@ -57,8 +57,9 @@ const CalculationCell = (props: ICalculationCellProps) => {
             onKeyDown={onKeyUp}
             onFocus={onCellEnter}
             className={classNames("calculationRow__cell", {
-                ["calculationRow__cell_helper"]: rowType === "helper",
+                ["calculationRow__cell_helper"]: rowType === "helperForCalculations" || rowType === "helperForNumbers",
                 ["calculationRow__cell_result"]: rowType === "result",
+                ["calculationRow__cell_midCalculations"]: rowType === "calculation" || rowType === "helperForCalculations",
                 ["calculationRow__cell_offset"]: isOffsetCell,
             })}
         />
