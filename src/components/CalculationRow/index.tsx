@@ -39,7 +39,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
     };
 
     const onRowFocused = () => {
-        if (rowCellsCount !== activeRowLength || rowType==="helper") {
+        if (rowCellsCount !== activeRowLength || rowType === "helper") {
             setActiveCell(getNextActiveCellInRow());
             setActiveRowLength(rowCellsCount);
         }
@@ -51,8 +51,8 @@ const CalculationRow = (props: ICalculationRowProps) => {
             return digitsInRow - 1;
         } else if (nextActiveCell < 0) {
             return 0;
-        } else if (rowType==="helper" && nextActiveCell >= digitsInRow ) {
-            return digitsInRow-2;
+        } else if (rowType === "helper" && nextActiveCell >= digitsInRow) {
+            return digitsInRow - 2;
         }
         return nextActiveCell;
     };

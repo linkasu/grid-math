@@ -18,19 +18,21 @@ const CalculationCell = (props: ICalculationCellProps) => {
 
     useEffect(() => {
         if (isFocused) {
-            inputRef.current?.focus();
-            inputRef.current?.select();
+            if (!inputRef.current) return;
+            inputRef.current.focus();
         }
     }, [isFocused]);
 
     const onInput = () => {
-        const value = inputRef.current?.value;
+        if (!inputRef.current) return;
+        const value = inputRef.current.value;
         if (!value || !value.trim()) return;
         if (!isCorrectValue(value)) {
             /* @ts-ignore*/
-            inputRef.current?.value = value.slice(0, -1);
+            inputRef.current.value = value.slice(0, -1);
         }
-        /*if (isCorrectValue(value)) {               Uncomment if autofocus after input needed
+        /* Uncomment if autofocus after input needed
+        if (isCorrectValue(value)) {        
             if (rowType === "helper") return;
             focusNextCell(rowType === "number" ? "right" : "left");
         } else {
@@ -39,10 +41,21 @@ const CalculationCell = (props: ICalculationCellProps) => {
         }*/
     };
     const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const input = inputRef.current;
+        if (!input) return;
         if (e.key === "ArrowRight") {
-            focusNextCell("right");
+            if (input.selectionStart === input.value.length) {
+                e.preventDefault();
+                focusNextCell("right");
+            }
         } else if (e.key === "ArrowLeft") {
-            focusNextCell("left");
+            if (rowType === "helper" && input.selectionStart === 0) {
+                e.preventDefault();
+                focusNextCell("left");
+            } else if (rowType !== "helper") {
+                e.preventDefault();
+                focusNextCell("left");
+            }
         }
     };
 
