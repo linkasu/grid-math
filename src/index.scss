@@ -36,7 +36,18 @@ h2 {
     color: $fontBlue;
 }
 
-input {
+input,
+span {
     font-family: "Montserrat", sans-serif;
     font-weight: normal;
+}
+
+input[type="text"]::-webkit-inner-spin-button,
+input[type="text"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="text"] {
+    -moz-appearance: textfield;
 }

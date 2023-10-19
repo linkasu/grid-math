@@ -50,13 +50,4 @@
         padding-bottom: 1rem;
         border-bottom: 4px solid $fontBlack;
     }
-    input[type="text"]::-webkit-inner-spin-button,
-    input[type="text"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type="text"] {
-        -moz-appearance: textfield;
-    }
 }

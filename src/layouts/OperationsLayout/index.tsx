@@ -7,6 +7,7 @@ import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { firebaseAnalytics } from "../../utils/firebase";
 import { logEvent } from "firebase/analytics";
+import Button from "../../components/Button";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
@@ -48,13 +49,12 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                 <span className="operations-layout__title">
                     <h2>{layoutTitle}</h2> {getTemplateSymbol(operationType)}
                 </span>
-                <button
+                <Button
                     onClick={onAddTemplate}
                     aria-label="Добавить шаблон"
-                    className="operations-layout__add-template"
-                >
-                    Попробовать еще
-                </button>
+                    //className="operations-layout__add-template"
+                    title="Попробовать еще"
+                />
             </div>
             <div className="operations-layout__templates container">
                 {templates.map((template, index) => (
