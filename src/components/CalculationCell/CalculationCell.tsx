@@ -27,18 +27,18 @@ const CalculationCell = (props: ICalculationCellProps) => {
         if (!inputRef.current) return;
         const value = inputRef.current.value;
         if (!value || !value.trim()) return;
+        /* Uncomment if autofocus after input not needed
         if (!isCorrectValue(value)) {
-            /* @ts-ignore*/
+            /* @ts-ignore
             inputRef.current.value = value.slice(0, -1);
-        }
-        /* Uncomment if autofocus after input needed
+        }*/
         if (isCorrectValue(value)) {        
             if (rowType === "helper") return;
             focusNextCell(rowType === "number" ? "right" : "left");
         } else {
-            /* @ts-ignore
+            /* @ts-ignore*/
             inputRef.current?.value = value.slice(0, -1);
-        }*/
+        }
     };
     const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const input = inputRef.current;
