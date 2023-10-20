@@ -1,0 +1,57 @@
+@import "../../styles/colors.scss";
+
+.emailInput {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    @media only screen and (max-width: 575px) {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    &__formGroup {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin-bottom: 1.5rem;
+        @media only screen and (max-width: 575px) {
+            flex-wrap: wrap;
+        }
+    }
+    input {
+        height: 2.5rem;
+        border-radius: 0.25rem;
+        width: 100%;
+        margin-top: 0.25rem;
+        padding: 0.5rem;
+        border: 3px solid $primaryBlue;
+        box-sizing: border-box;
+        &:focus + label {
+            display: block;
+            opacity: 1;
+        }
+        @media only screen and (max-width: 575px) {
+            width: 100%;
+        }
+    }
+    label {
+        font-size: 1rem;
+        font-weight: 400;
+        font-family: "Montserrat", sans-serif;
+        opacity: 0;
+    }
+    &__sendButton {
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        min-width: 10rem;
+        width: 25%;
+        max-height: 2.5rem;
+        margin-left: 1.25rem;
+        line-height: 22px;
+        @media only screen and (max-width: 575px) {
+            width: 100%;
+            min-width: 100%;
+            margin: 0;
+        }
+    }
+}

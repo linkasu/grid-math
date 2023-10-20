@@ -6,17 +6,17 @@ interface IButtonProps {
     onClick?: () => void;
     title: string;
     ariaLabel?: string;
-    className?: string;
+    buttonClass?: string;
     type?: "button" | "submit" | "reset";
 }
 
 const Button = (props: IButtonProps) => {
-    const { onClick, title, ariaLabel, className, type="button" } = props;
+    const { onClick, title, ariaLabel, buttonClass, type = "button" } = props;
     return (
         <button
             onClick={onClick}
             aria-label={ariaLabel}
-            className={classNames("button", className)}
+            className={classNames("button", buttonClass)}
             type={type}
         >
             {title}

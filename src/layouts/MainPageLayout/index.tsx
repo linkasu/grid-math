@@ -32,7 +32,7 @@ const operations: Operation[] = [
 ];
 
 const MainPageLayout = () => {
-    //const [user] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     return (
         <div className="relative-background">
             <ScaleSwitch />
@@ -46,7 +46,7 @@ const MainPageLayout = () => {
                     </section>
                 ))}
             </div>
-            {/*user &&*/ <AuthLayout></AuthLayout>}
+            {!user && <AuthLayout></AuthLayout>}
         </div>
     );
 };

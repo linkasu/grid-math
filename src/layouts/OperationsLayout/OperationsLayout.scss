@@ -5,12 +5,14 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow-x: auto;
 
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
         margin-bottom: 4rem;
+        flex-wrap: wrap;
     }
 
     &__title {
@@ -41,5 +43,8 @@
         flex-wrap: wrap;
         box-sizing: content-box;
         width: 100%;
+        @media only screen and (max-width: 575px) {
+            box-sizing: border-box;
+        }
     }
 }
