@@ -1,6 +1,7 @@
 import React from "react";
 import "./EmailInputFormGroup.scss";
 import Button from "../Button";
+import ErrorIcon from "../../icons/ErrorIcon";
 
 interface IEmailInputFormGroupProps {
     onChange: (email: string) => void;
@@ -12,7 +13,12 @@ const EmailInputFormGroup = (props: IEmailInputFormGroupProps) => {
     return (
         <div className="emailInput__formGroup">
             <div className="emailInput">
-                {errorText && <span>{errorText}</span>}
+                {errorText && (
+                    <div className="emailInput__error">
+                        <ErrorIcon />
+                        <span>{errorText}</span>
+                    </div>
+                )}
                 <input
                     id="email"
                     placeholder="Электронная почта"

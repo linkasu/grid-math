@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./MainPageLayout.scss";
 import OperationsLayout from "../OperationsLayout";
 import { OperationType } from "../../components/BasicCalculationTemplate";
 import ScaleSwitch from "../../components/ScaleSwitch";
 import AuthLayout from "../AuthLayout";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { isSignInWithEmailLink, signInWithEmailLink } from "@firebase/auth";
 import { auth } from "../../config/FirebaseConfig";
 
 export type Operation = {
@@ -32,7 +33,27 @@ const operations: Operation[] = [
 ];
 
 const MainPageLayout = () => {
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
+    const signedWithLink = isSignInWithEmailLink(auth, window.location.href);
+    const [authLoading, setAuthLoading] = useState(false);
+    useEffect(() => {
+        checkAuth();
+    }, [user, signedWithLink]);
+    const checkAuth = () => {
+        if (!user && signedWithLink) {
+            setAuthLoading(true);
+            let email = localStorage.getItem("email");
+            if (email) {
+                signInWithEmailLink(auth, email, window.location.href)
+                    .then(() => {
+                        localStorage.removeItem("email");
+                    })
+                    .catch((e) => console.log(e))
+                    .finally(() => setAuthLoading(false));
+            }
+        }
+    };
+
     return (
         <div className="relative-background">
             <ScaleSwitch />
@@ -46,7 +67,7 @@ const MainPageLayout = () => {
                     </section>
                 ))}
             </div>
-            {!user && <AuthLayout></AuthLayout>}
+            {!user && !loading && !authLoading && <AuthLayout />}
         </div>
     );
 };

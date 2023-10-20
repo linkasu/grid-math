@@ -2,6 +2,8 @@ import React, { FormEvent, useState } from "react";
 import "./AuthLayout.scss";
 import EmailInputFormGroup from "../../components/EmailInputFormGroup";
 import * as EmailValidator from "email-validator";
+import { sendSignInLinkToEmail } from "@firebase/auth";
+import { auth } from "../../config/FirebaseConfig";
 
 const AuthLayout = () => {
     const [isVisible, setIsVisible] = useState(true);
@@ -13,14 +15,12 @@ const AuthLayout = () => {
         if (email.trim().length === 0) {
             setErrorText("Пожалуйста, заполните поле");
         } else {
-            const validator = require("validator");
             const isValid = EmailValidator.validate(email.trim());
             if (isValid) {
-                console.log(true);
-                /*sendSignInLinkToEmail(auth, email, {
-                    url: "https://gridmath.linka.su/",
+                sendSignInLinkToEmail(auth, email, {
+                    url: "http://gridmath.linka.su/",
                     handleCodeInApp: true,
-                }).then(() => localStorage.setItem("email", email))*/
+                }).then(() => localStorage.setItem("email", email));
                 setIsEmailSend(true);
             } else {
                 setErrorText("Почта введена некорректно");
@@ -31,8 +31,12 @@ const AuthLayout = () => {
         isVisible && (
             <div className="auth__layout">
                 <div className="auth__popup">
+                    <img
+                        src="https://github.com/linkasu/grid-math/blob/add-auth-layout/src/assets/branding.png?raw=true"
+                        alt="branding image"
+                    />
                     {isEmailSend ? (
-                        <span>Мы отправили ссылку для авторизации вам на почту</span>
+                        <span>Мы отправили ссылку для авторизации вам на почту {email}</span>
                     ) : (
                         <>
                             <span>

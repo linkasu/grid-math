@@ -4,9 +4,30 @@
     width: 100%;
     display: flex;
     flex-direction: column-reverse;
+    position: relative;
     @media only screen and (max-width: 575px) {
         width: 100%;
         margin-bottom: 1rem;
+    }
+    &__error {
+        display: flex;
+        align-items: center;
+        margin-top: 0.25rem;
+        position: absolute;
+        bottom: -0.5rem;
+        transform: translateY(100%);
+        @media only screen and (max-width: 575px) {
+            position: relative;
+            transform: none;
+        }
+        &>svg {
+            margin-right: 0.5rem;
+        }
+        & span {
+            font-size: 14px;
+            line-height: 130%;
+            margin: 0;
+        }
     }
     &__formGroup {
         display: flex;

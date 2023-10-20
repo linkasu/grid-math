@@ -12,14 +12,36 @@
         z-index: 10;
         padding: 1rem;
         box-sizing: border-box;
-        background-image: url(../../assets/linkaLogo.png);
+        background-image: url(https://github.com/linkasu/grid-math/blob/add-auth-layout/src/assets/linkaLogo.png?raw=true);
+        background-repeat: no-repeat;
+        background-position: bottom 10% right 0;
+        @media only screen and (max-width: 768px) {
+            background-size: contain;
+            background-position: unset;
+            background-position-y: 90%;
+            background-position-x: center;
+        }
     }
     &__popup {
         background-color: white;
-        padding: 3rem 6rem;
+        padding: 6rem 6rem 3rem;
         border-radius: 0.5rem;
+        position: relative;
         @media only screen and (max-width: 575px) {
             padding: 1rem;
+        }
+        img {
+            position: absolute;
+            width: 55%;
+            top: -1rem;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            @media only screen and (max-width: 768px) {
+                width: 70%;
+            }
+            @media only screen and (max-width: 575px) {
+                display: none;
+            }
         }
         span {
             font-family: "Montserrat", sans-serif;
