@@ -43,6 +43,9 @@ const MainPageLayout = () => {
         if (!user && signedWithLink) {
             setAuthLoading(true);
             let email = localStorage.getItem("email");
+            if (!email) {
+                email = window.prompt("Please provide your email for confirmation");
+            }
             if (email) {
                 signInWithEmailLink(auth, email, window.location.href)
                     .then(() => {

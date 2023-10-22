@@ -11,6 +11,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "build"),
         filename: "[name].[hash].js",
+        assetModuleFilename: "assets/[name].[ext]"
     },
     devServer: {
         port: 3000,
@@ -23,8 +24,8 @@ module.exports = {
                 use: ["style-loader", "css-loader", "sass-loader"],
             },
             {
-                test: /\.(jpeg|jpg|png|svg)$/,
-                use: ["file-loader"],
+                test: /\.(jpeg|jpg|png|svg|gif)$/,
+                type: "asset/resource",
             },
             {
                 test: /\.(ts|tsx)$/,
