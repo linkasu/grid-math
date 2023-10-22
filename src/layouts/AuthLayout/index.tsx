@@ -31,10 +31,7 @@ const AuthLayout = () => {
         isVisible && (
             <div className="auth__layout">
                 <div className="auth__popup">
-                    <img
-                        src="https://github.com/linkasu/grid-math/blob/add-auth-layout/src/assets/branding.png?raw=true"
-                        alt="branding image"
-                    />
+                    <img src={require("../../assets/branding.png")} alt="branding image" />
                     {isEmailSend ? (
                         <span>Мы отправили ссылку для авторизации вам на почту {email}</span>
                     ) : (
