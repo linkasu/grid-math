@@ -6,7 +6,7 @@ import ScaleSwitch from "../../components/ScaleSwitch";
 import AuthLayout from "../AuthLayout";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { isSignInWithEmailLink, signInWithEmailLink } from "@firebase/auth";
-import { auth } from "../../config/FirebaseConfig";
+import { auth } from "../../utils/firebase";
 
 export type Operation = {
     name: OperationType;

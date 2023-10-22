@@ -3,7 +3,7 @@ import "./AuthLayout.scss";
 import EmailInputFormGroup from "../../components/EmailInputFormGroup";
 import * as EmailValidator from "email-validator";
 import { sendSignInLinkToEmail } from "@firebase/auth";
-import { auth } from "../../config/FirebaseConfig";
+import { auth } from "../../utils/firebase";
 
 const AuthLayout = () => {
     const [isVisible, setIsVisible] = useState(true);
