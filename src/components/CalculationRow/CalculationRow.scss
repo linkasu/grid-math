@@ -44,6 +44,10 @@
         &_offset {
             opacity: 0;
         }
+        &_painted {
+            background-color: $secondaryBlue;
+            border-color: $secondaryBlue;
+        }
     }
     &_last {
         margin-bottom: 1rem;

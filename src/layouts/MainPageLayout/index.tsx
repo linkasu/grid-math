@@ -57,8 +57,19 @@ const MainPageLayout = () => {
         }
     };
 
+    const handleLogout = () => {
+        auth.signOut()
+            .then(() => {
+                console.log("successfully logged out");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <div className="relative-background">
+            <button onClick={handleLogout}>-</button>
             <ScaleSwitch />
             <div className="templates-page" id="templates-page">
                 {operations.map((operation, i) => (

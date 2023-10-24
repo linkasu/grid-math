@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import { RowType } from "../CalculationRow";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 interface ICalculationCellProps {
     rowType: RowType;
@@ -13,6 +14,8 @@ interface ICalculationCellProps {
 const CalculationCell = (props: ICalculationCellProps) => {
     const { rowType, isOffsetCell = false, isFocused = false, onCellEnter, focusNextCell } = props;
     const inputRef = useRef<HTMLInputElement>(null);
+    const { paintMode } = useTypedSelector((state) => state.settings);
+    const [isPainted, setIsPainted] = useState(false);
 
     const maxLength = rowType === "helper" ? 2 : 1;
 
@@ -32,7 +35,7 @@ const CalculationCell = (props: ICalculationCellProps) => {
             /* @ts-ignore
             inputRef.current.value = value.slice(0, -1);
         }*/
-        if (isCorrectValue(value)) {        
+        if (isCorrectValue(value)) {
             if (rowType === "helper") return;
             focusNextCell(rowType === "number" ? "right" : "left");
         } else {
@@ -59,6 +62,14 @@ const CalculationCell = (props: ICalculationCellProps) => {
         }
     };
 
+    const onCellClick = () => {
+        if (paintMode) {
+            setIsPainted((prev) => !prev);
+        } else {
+            onCellEnter();
+        }
+    };
+
     const isCorrectValue = (value: string): boolean => {
         const pattern = rowType === "helper" ? new RegExp(/[\d\.]$/) : new RegExp(/[0-9]/);
         return pattern.test(value) ? true : false;
@@ -72,11 +83,12 @@ const CalculationCell = (props: ICalculationCellProps) => {
             autoFocus={isFocused}
             onInput={onInput}
             onKeyDown={onKeyUp}
-            onFocus={onCellEnter}
+            onFocus={onCellClick}
             className={classNames("calculationRow__cell", {
                 ["calculationRow__cell_helper"]: rowType === "helper",
                 ["calculationRow__cell_result"]: rowType === "result",
                 ["calculationRow__cell_offset"]: isOffsetCell,
+                ["calculationRow__cell_painted"]: isPainted && rowType!=="helper",
             })}
         />
     );

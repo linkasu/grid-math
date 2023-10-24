@@ -1,3 +1,4 @@
 export interface ISVGProps {
-    className?: string
+    className?: string;
+    fill?: string;
 }
