@@ -44,6 +44,11 @@
         &_offset {
             opacity: 0;
         }
+        &_paintMode {
+            &:hover {
+                cursor: url("../../assets/paint.png"), auto;
+            }
+        }
         &_painted {
             background-color: $secondaryBlue;
             border-color: $secondaryBlue;

@@ -4,6 +4,8 @@ import PaintIcon from "../../icons/PaintIcon";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import classNames from "classnames";
+import ScaleMinusIcon from "../../icons/ScaleMinusIcon";
+import ScalePlusIcon from "../../icons/ScalePlusIcon";
 
 const ScaleSwitch = () => {
     let zoom = 1;
@@ -25,13 +27,17 @@ const ScaleSwitch = () => {
     const { switchPaintMode } = useActions();
 
     useEffect(() => {
-        if (paintMode) window.addEventListener("keyup", listenToEsc);
+        if (paintMode) {
+            window.addEventListener("keyup", listenToEsc);
+            document.body.classList.add("paintMode");
+        }
     }, [paintMode]);
 
     const listenToEsc = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
             switchPaintMode(false);
             window.removeEventListener("keyup", listenToEsc);
+            document.body.classList.remove("paintMode");
         }
     };
 
@@ -57,11 +63,11 @@ const ScaleSwitch = () => {
             >
                 <PaintIcon fill={isPaintSelected || paintMode ? "#ffffff" : "#333333"} />
             </button>
-            <button aria-label="Увеличить масштаб" onClick={decreaseScale}>
-                -
-            </button>
             <button aria-label="Уменьшить масштаб" onClick={increaseScale}>
-                +
+                <ScalePlusIcon />
+            </button>
+            <button aria-label="Увеличить масштаб" onClick={decreaseScale}>
+                <ScaleMinusIcon />
             </button>
         </div>
     );

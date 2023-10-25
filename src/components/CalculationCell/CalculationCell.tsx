@@ -46,6 +46,9 @@ const CalculationCell = (props: ICalculationCellProps) => {
     const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const input = inputRef.current;
         if (!input) return;
+        if (e.key === "Enter") {
+            onCellClick();
+        }
         if (e.key === "ArrowRight") {
             if (input.selectionStart === input.value.length) {
                 e.preventDefault();
@@ -63,10 +66,8 @@ const CalculationCell = (props: ICalculationCellProps) => {
     };
 
     const onCellClick = () => {
-        if (paintMode) {
+        if (paintMode && rowType !== "helper") {
             setIsPainted((prev) => !prev);
-        } else {
-            onCellEnter();
         }
     };
 
@@ -83,12 +84,14 @@ const CalculationCell = (props: ICalculationCellProps) => {
             autoFocus={isFocused}
             onInput={onInput}
             onKeyDown={onKeyUp}
-            onFocus={onCellClick}
+            onFocus={onCellEnter}
+            onClick={onCellClick}
             className={classNames("calculationRow__cell", {
                 ["calculationRow__cell_helper"]: rowType === "helper",
                 ["calculationRow__cell_result"]: rowType === "result",
                 ["calculationRow__cell_offset"]: isOffsetCell,
-                ["calculationRow__cell_painted"]: isPainted && rowType!=="helper",
+                ["calculationRow__cell_paintMode"]: paintMode && rowType !== "helper",
+                ["calculationRow__cell_painted"]: isPainted && rowType !== "helper",
             })}
         />
     );
