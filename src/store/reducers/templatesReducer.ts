@@ -1,4 +1,4 @@
-import { OperationType } from "../../components/BasicCalculationTemplate";
+import { TemplateOperationType } from "../../components/BasicCalculationTemplate";
 import {
     ADDITION_FIRST_TEMPLATE,
     DIVISION_FIRST_TEMPLATE,
@@ -27,7 +27,7 @@ export const templatesReducer = (
     state: ITemplatesState = initialState,
     action: TemplatesActions,
 ): ITemplatesState => {
-    const createNewTemplate = (operation: OperationType): ITemplate => {
+    const createNewTemplate = (operation: TemplateOperationType): ITemplate => {
         const templateId = createNewId(operation);
         const templateBasics = createTemplatesBasics(operation, templateId);
         return {
@@ -37,7 +37,7 @@ export const templatesReducer = (
         };
     };
 
-    const createNewId = (operation: OperationType) => {
+    const createNewId = (operation: TemplateOperationType) => {
         const templatesIds = state[operation];
         const idsCount = templatesIds.length;
         const dividerIndex = templatesIds[idsCount - 1].id.indexOf("-");
@@ -45,7 +45,7 @@ export const templatesReducer = (
         return `${operation}-${lastIdNumber}`;
     };
 
-    const createTemplatesBasics = (operation: OperationType, templateId: string) => {
+    const createTemplatesBasics = (operation: TemplateOperationType, templateId: string) => {
         switch (operation) {
             case "addition":
                 return createAdditionBasics(templateId);

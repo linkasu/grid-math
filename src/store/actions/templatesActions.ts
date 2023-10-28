@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import { ITemplate, TemplatesActionType, TemplatesActions } from "../../types/templatesTypes";
-import { OperationType } from "../../components/BasicCalculationTemplate";
+import { TemplateOperationType } from "../../components/BasicCalculationTemplate";
 
-export const addNewTemplate = (operation: OperationType) => {
+export const addNewTemplate = (operation: TemplateOperationType) => {
     return (dispatch: Dispatch<TemplatesActions>) => {
         dispatch({ type: TemplatesActionType.ADD_TEMPLATE, payload: operation });
     };

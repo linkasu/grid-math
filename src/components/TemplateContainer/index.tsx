@@ -1,13 +1,13 @@
 import React, { ReactElement } from "react";
 import classNames from "classnames";
 import "./TemplateContainer.scss";
-import { OperationType } from "../BasicCalculationTemplate";
+import { TemplateOperationType } from "../BasicCalculationTemplate";
 import DeleteIcon from "../../icons/DeleteIcon";
 
 interface ITemplateContainerProps {
     templateElement: ReactElement;
     id: string;
-    operation: OperationType;
+    operation: TemplateOperationType;
     canRemoveTemplate: boolean;
     onRemoveTemplate: (id: string) => void;
 }

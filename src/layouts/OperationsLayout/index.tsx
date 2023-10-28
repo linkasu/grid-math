@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./OperationsLayout.scss";
 import TemplateContainer from "../../components/TemplateContainer";
-import { OperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
+import { TemplateOperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
 import Template from "../../components/Template";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
@@ -11,7 +11,7 @@ import Button from "../../components/Button";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
-    operationType: OperationType;
+    operationType: TemplateOperationType;
 }
 
 const OperationsLayout = (props: IOperationsLayoutProps) => {

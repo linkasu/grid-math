@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MainPageLayout.scss";
 import OperationsLayout from "../OperationsLayout";
-import { OperationType } from "../../components/BasicCalculationTemplate";
+import { TemplateOperationType } from "../../components/BasicCalculationTemplate";
 import ScaleSwitch from "../../components/ScaleSwitch";
 import AuthLayout from "../AuthLayout";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -9,7 +9,7 @@ import { isSignInWithEmailLink, signInWithEmailLink } from "@firebase/auth";
 import { auth } from "../../utils/firebase";
 
 export type Operation = {
-    name: OperationType;
+    name: TemplateOperationType;
     title: string;
 };
 

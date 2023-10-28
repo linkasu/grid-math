@@ -1,4 +1,4 @@
-import { OperationType } from "../components/BasicCalculationTemplate";
+import { TemplateOperationType, BasicOperationType } from "../components/BasicCalculationTemplate";
 import { TemplateProps } from "../components/Template";
 
 export interface ITemplatesState {
@@ -9,14 +9,14 @@ export interface ITemplatesState {
 }
 
 export interface ITemplate {
-    operation: OperationType,
+    operation: TemplateOperationType,
     id: string,
     basics: IBasic[]
 }
 
 export interface IBasic {
     id: string;
-    operation: OperationType;
+    operation: BasicOperationType;
     digitsInRow: number;
     calculatedNumbersCount: number;
     isHelperCalculation?: boolean;
@@ -30,7 +30,7 @@ export interface ITemplatesAction {
 
 export interface AddTemplateAction {
     type: TemplatesActionType.ADD_TEMPLATE;
-    payload: OperationType;
+    payload: TemplateOperationType;
 }
 export interface RemoveTemplateAction {
     type: TemplatesActionType.REMOVE_TEMPLATE;

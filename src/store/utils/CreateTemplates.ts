@@ -5,7 +5,6 @@ export const SUBTRACTION_FIRST_TEMPLATE_ID = "subtraction-0";
 export const MULTIPLICATION_FIRST_TEMPLATE_ID = "multiplication-0";
 export const DIVISION_FIRST_TEMPLATE_ID = "division-0";
 
-
 export const MAX_DIGIT_NUMBER = 5;
 export const MAX_DIGIT_NUMBER_MULTIPLICATION = 3;
 export const CALCULATED_NUMBERS_COUNT = 2;
@@ -87,7 +86,7 @@ export function createDivisionBasics(templateId: string): IBasic[] {
         basicsArray.push({
             id: `${templateId}-${i}`,
             calculatedNumbersCount: CALCULATED_NUMBERS_COUNT,
-            operation: "subtraction",
+            operation: i === 0 ? "division-first-basic" : "subtraction",
             digitsInRow: 5,
             isHelperCalculation: true,
             digitsInResult: i + 1 === 5 ? 5 : 0,
@@ -96,7 +95,7 @@ export function createDivisionBasics(templateId: string): IBasic[] {
             basicsArray.push({
                 id: `${templateId}-${i + 1}`,
                 calculatedNumbersCount: CALCULATED_NUMBERS_COUNT,
-                operation: "division",
+                operation: "division-result",
                 digitsInRow: 5,
                 isHelperCalculation: false,
             });

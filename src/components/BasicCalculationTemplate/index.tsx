@@ -10,7 +10,13 @@ import { IBasic } from "../../types/templatesTypes";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 
-export type OperationType = "addition" | "subtraction" | "multiplication" | "division";
+export type TemplateOperationType = "addition" | "subtraction" | "multiplication" | "division";
+export type BasicOperationType =
+    | "addition"
+    | "subtraction"
+    | "multiplication"
+    | "division-result"
+    | "division-first-basic";
 
 interface IBasicCalculationTemplateProps {
     basic: IBasic;
@@ -18,13 +24,15 @@ interface IBasicCalculationTemplateProps {
     onMoveToSide?: (side: "right" | "left") => void;
 }
 
-export const getTemplateSymbol = (operation: OperationType) => {
+export const getTemplateSymbol = (operation: BasicOperationType | TemplateOperationType) => {
     switch (operation) {
         case "multiplication":
             return <MultiplyIcon />;
         case "subtraction":
             return <MinusIcon />;
-        case "division":
+        case "division-first-basic":
+            return <MinusIcon />;
+        case "division-result":
             return <DivideIcon />;
         default:
             return <PlusIcon />;
@@ -51,7 +59,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
     const { setActiveBasic, setNextBasic, setPreviosBasic } = useActions();
 
     const defaultInterval = isHelperCalculation ? 0.5 : 1;
-    const minimumRow = operation === "division" ? 0 : -0.5;
+    const minimumRow = operation === "division-result" ? 0 : -0.5;
 
     const isResultRow = (rowId: number): boolean => {
         return rowId === calculatedNumbersCount && digitsInResult > 0;
@@ -89,7 +97,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
         }
     };
 
-    if (operation === "division") {
+    if (operation === "division-result") {
         return (
             <div className="template__division-right-side">
                 <CalculationRow
@@ -119,9 +127,9 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                 <div key={`${operation}-${i}`}>
                     {(i === 0 || isHelperCalculation) && i !== calculatedNumbersCount && (
                         <CalculationRow
-                            digitsInRow={digitsInRow-1}
+                            digitsInRow={digitsInRow - 1}
                             rowType={"helper"}
-                            offsetCells={needOffsetRight ? i+1 : 1}
+                            offsetCells={needOffsetRight ? i + 1 : 1}
                             isFocusedRow={i - 0.5 === focusedRow && activeBasic === id}
                             setRowFocused={() => onRowClick(i - 0.5)}
                             focusNextRow={moveFocusToNextRow}
@@ -130,7 +138,11 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                     )}
                     <CalculationRow
                         digitsInRow={digitsInRow}
-                        rowType={basicIndex > 0 ? "calculation" : "number"}
+                        rowType={
+                            basicIndex > 0 || (basicIndex === 0 && i === 1 && operation==="division-first-basic")
+                                ? "calculation"
+                                : "number"
+                        }
                         className={classNames({
                             ["calculationRow_last"]: i + 1 === calculatedNumbersCount,
                         })}
