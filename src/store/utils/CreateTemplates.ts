@@ -86,7 +86,7 @@ export function createDivisionBasics(templateId: string): IBasic[] {
         basicsArray.push({
             id: `${templateId}-${i}`,
             calculatedNumbersCount: CALCULATED_NUMBERS_COUNT,
-            operation: i === 0 ? "division-first-basic" : "subtraction",
+            operation: "division-basic",
             digitsInRow: 5,
             isHelperCalculation: true,
             digitsInResult: i + 1 === 5 ? 5 : 0,

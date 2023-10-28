@@ -16,7 +16,7 @@ export type BasicOperationType =
     | "subtraction"
     | "multiplication"
     | "division-result"
-    | "division-first-basic";
+    | "division-basic";
 
 interface IBasicCalculationTemplateProps {
     basic: IBasic;
@@ -30,9 +30,9 @@ export const getTemplateSymbol = (operation: BasicOperationType | TemplateOperat
             return <MultiplyIcon />;
         case "subtraction":
             return <MinusIcon />;
-        case "division-first-basic":
+        case "division-basic":
             return <MinusIcon />;
-        case "division-result":
+        case "division":
             return <DivideIcon />;
         default:
             return <PlusIcon />;
@@ -52,7 +52,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
     } = basic;
 
     const needOffsetRight = isHelperCalculation && operation === "addition";
-    const defaultState = isHelperCalculation && operation !== "subtraction" ? -0.5 : 0;
+    const defaultState = isHelperCalculation && operation !== "division-basic" ? -0.5 : 0;
     const [focusedRow, setFocusedRow] = useState(defaultState);
 
     const { activeBasic } = useTypedSelector((state) => state.controll);
@@ -107,6 +107,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                     setRowFocused={() => onRowClick(0)}
                     focusNextRow={moveFocusToNextRow}
                     onMoveToSide={onMoveToSide}
+                    autoFocusMove="right"
                 />
                 <div className="template__division-divide-line"></div>
                 <CalculationRow
@@ -116,6 +117,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                     setRowFocused={() => onRowClick(1)}
                     focusNextRow={moveFocusToNextRow}
                     onMoveToSide={onMoveToSide}
+                    autoFocusMove="right"
                 />
             </div>
         );
@@ -138,10 +140,12 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                     )}
                     <CalculationRow
                         digitsInRow={digitsInRow}
-                        rowType={
-                            basicIndex > 0 || (basicIndex === 0 && i === 1 && operation==="division-first-basic")
-                                ? "calculation"
-                                : "number"
+                        rowType={"number"}
+                        autoFocusMove={
+                            basicIndex > 0 ||
+                            (basicIndex === 0 && i === 1 && operation === "division-basic")
+                                ? "left"
+                                : "right"
                         }
                         className={classNames({
                             ["calculationRow_last"]: i + 1 === calculatedNumbersCount,
@@ -165,7 +169,7 @@ const BasicCalculationTemplate = (props: IBasicCalculationTemplateProps) => {
                     {isResultRow(i + 1) && (
                         <CalculationRow
                             isFocusedRow={i + 1 === focusedRow && activeBasic === id}
-                            rowType={"result"}
+                            rowType={operation === "division-basic" ? "number" : "result"}
                             digitsInRow={digitsInResult}
                             setRowFocused={() => onRowClick(i + 1)}
                             focusNextRow={moveFocusToNextRow}

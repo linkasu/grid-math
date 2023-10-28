@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import "./CalculationRow.scss";
 import classNames from "classnames";
-import CalculationCell from "../CalculationCell/CalculationCell";
+import CalculationCell, { CellType } from "../CalculationCell/CalculationCell";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 
-export type RowType = "number" | "calculation" | "helper" | "result";
+export type RowType = "number" | "helper" | "result";
 
 interface ICalculationRowProps {
     digitsInRow: number;
@@ -13,6 +13,7 @@ interface ICalculationRowProps {
     rowType: RowType;
     className?: string;
     isFocusedRow?: boolean;
+    autoFocusMove?: "left" | "right";
     setRowFocused: () => void;
     focusNextRow: (moveFocus: "up" | "down") => void;
     onMoveToSide?: (side: "right" | "left") => void;
@@ -25,6 +26,7 @@ const CalculationRow = (props: ICalculationRowProps) => {
         rowType,
         className,
         isFocusedRow = false,
+        autoFocusMove = "left",
         setRowFocused,
         focusNextRow,
         onMoveToSide,
@@ -89,21 +91,26 @@ const CalculationRow = (props: ICalculationRowProps) => {
             focusNextRow("down");
         }
     };
+    const getCellType = (i: number): CellType => {
+        if (
+            (i >= rowCellsCount - offsetCells && offsetCells !== 0) ||
+            (i === rowCellsCount && rowType === "helper")
+        )
+            return "offset";
+        return rowType;
+    };
     return (
         <div className={classNames("calculationRow", className)} onKeyDown={onKeyUp}>
             {[...Array(rowCellsCount)].map((e, i) => (
                 <CalculationCell
                     key={i}
-                    rowType={rowType}
+                    autoFocusMove={autoFocusMove}
+                    cellType={getCellType(i)}
                     isFocused={i === activeCell && isFocusedRow}
                     focusNextCell={focuseNextCell}
                     onCellEnter={() => {
                         onCellClick(i);
                     }}
-                    isOffsetCell={
-                        (i >= rowCellsCount - offsetCells && offsetCells !== 0) ||
-                        (i === rowCellsCount && rowType === "helper")
-                    }
                 />
             ))}
         </div>

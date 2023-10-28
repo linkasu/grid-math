@@ -35,14 +35,9 @@ const DivisionTemplate = (props: IDivisionTemplateProps) => {
     return (
         <div className="template__division">
             <div className="template">
-                <BasicCalculationTemplate
-                    basic={template.basics[0]}
-                    basicIndex={0}
-                    onMoveToSide={moveToTemplateSide}
-                />
                 {template.basics.map((basic, i) => {
                     return (
-                        i !== template.basics.length - 1 && i!==0 && (
+                        i !== template.basics.length - 1 && (
                             <BasicCalculationTemplate
                                 key={basic.id}
                                 basic={basic}

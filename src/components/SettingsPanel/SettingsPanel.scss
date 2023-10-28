@@ -1,0 +1,57 @@
+@import "../../styles/colors.scss";
+@import "../../styles/variables.scss";
+
+.settings {
+    padding: 1.5rem 1.5rem;
+    border-radius: 10px;
+    background-color: $backgroundLight;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9;
+    box-shadow: 0px 3px 4px $secondaryBlue;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    & > h6 {
+        margin: 0 0.5rem;
+    }
+
+    & > button {
+        border-radius: $radius;
+        background-color: $secondaryBlue;
+        color: $fontBlack;
+        border: none;
+        width: 3rem;
+        height: 3rem;
+        font-weight: 700;
+        font-size: 1rem;
+        margin: 0 0 1rem;
+        &:last-child {
+            margin: 0;
+        }
+        &:hover {
+            cursor: pointer;
+            opacity: 70%;
+        }
+    }
+    .paintButton {
+        background-color: #ffffff;
+        color: #333333;
+        border: 2px solid $secondaryBlue;
+        &:hover,
+        &:focus {
+            background-color: $primaryBlue;
+            color: #ffffff;
+            border-color: $primaryBlue;
+        }
+        &_active {
+            background-color: $primaryBlue;
+            color: #ffffff;
+            border-color: $primaryBlue;
+        }
+    }
+}
+.paintMode {
+    cursor: url(../../assets/paint.png), auto;
+}

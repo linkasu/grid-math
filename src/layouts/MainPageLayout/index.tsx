@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./MainPageLayout.scss";
 import OperationsLayout from "../OperationsLayout";
 import { TemplateOperationType } from "../../components/BasicCalculationTemplate";
-import ScaleSwitch from "../../components/ScaleSwitch";
 import AuthLayout from "../AuthLayout";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { isSignInWithEmailLink, signInWithEmailLink } from "@firebase/auth";
 import { auth } from "../../utils/firebase";
+import SettingsPanel from "../../components/SettingsPanel";
 
 export type Operation = {
     name: TemplateOperationType;
@@ -44,7 +44,7 @@ const MainPageLayout = () => {
             setAuthLoading(true);
             let email = localStorage.getItem("email");
             if (!email) {
-                email = window.prompt("Please provide your email for confirmation");
+                email = window.prompt("Пожалуйста, введите почту для подтверждения");
             }
             if (email) {
                 signInWithEmailLink(auth, email, window.location.href)
@@ -59,7 +59,7 @@ const MainPageLayout = () => {
 
     return (
         <div className="relative-background">
-            <ScaleSwitch />
+            <SettingsPanel />
             <div className="templates-page" id="templates-page">
                 {operations.map((operation, i) => (
                     <section key={i}>

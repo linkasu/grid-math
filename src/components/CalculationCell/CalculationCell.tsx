@@ -1,23 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
-import { RowType } from "../CalculationRow";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { RowType } from "../CalculationRow";
+
+export type CellType = RowType | "offset";
 
 interface ICalculationCellProps {
-    rowType: RowType;
-    isOffsetCell?: boolean;
+    cellType: CellType;
     isFocused?: boolean;
+    autoFocusMove: "left" | "right";
     onCellEnter: () => void;
     focusNextCell: (moveTo: "right" | "left") => void;
 }
 
 const CalculationCell = (props: ICalculationCellProps) => {
-    const { rowType, isOffsetCell = false, isFocused = false, onCellEnter, focusNextCell } = props;
+    const { isFocused = false, onCellEnter, focusNextCell, cellType, autoFocusMove } = props;
     const inputRef = useRef<HTMLInputElement>(null);
     const { paintMode } = useTypedSelector((state) => state.settings);
     const [isPainted, setIsPainted] = useState(false);
 
-    const maxLength = rowType === "helper" ? 2 : 1;
+    const maxLength = cellType === "helper" ? 2 : 1;
 
     useEffect(() => {
         if (isFocused) {
@@ -36,8 +38,8 @@ const CalculationCell = (props: ICalculationCellProps) => {
             inputRef.current.value = value.slice(0, -1);
         }*/
         if (isCorrectValue(value)) {
-            if (rowType === "helper") return;
-            focusNextCell(rowType === "number" ? "right" : "left");
+            if (cellType === "helper") return;
+            focusNextCell(autoFocusMove);
         } else {
             /* @ts-ignore*/
             inputRef.current?.value = value.slice(0, -1);
@@ -55,10 +57,10 @@ const CalculationCell = (props: ICalculationCellProps) => {
                 focusNextCell("right");
             }
         } else if (e.key === "ArrowLeft") {
-            if (rowType === "helper" && input.selectionStart === 0) {
+            if (cellType === "helper" && input.selectionStart === 0) {
                 e.preventDefault();
                 focusNextCell("left");
-            } else if (rowType !== "helper") {
+            } else if (cellType !== "helper") {
                 e.preventDefault();
                 focusNextCell("left");
             }
@@ -66,13 +68,13 @@ const CalculationCell = (props: ICalculationCellProps) => {
     };
 
     const onCellClick = () => {
-        if (paintMode && rowType !== "helper") {
+        if (paintMode && cellType !== "helper") {
             setIsPainted((prev) => !prev);
         }
     };
 
     const isCorrectValue = (value: string): boolean => {
-        const pattern = rowType === "helper" ? new RegExp(/[\d\.]$/) : new RegExp(/[0-9]/);
+        const pattern = cellType === "helper" ? new RegExp(/[\d\.]$/) : new RegExp(/[0-9]/);
         return pattern.test(value) ? true : false;
     };
 
@@ -80,6 +82,7 @@ const CalculationCell = (props: ICalculationCellProps) => {
         <input
             type="text"
             maxLength={maxLength}
+            disabled={cellType === "offset"}
             ref={inputRef}
             autoFocus={isFocused}
             onInput={onInput}
@@ -87,11 +90,11 @@ const CalculationCell = (props: ICalculationCellProps) => {
             onFocus={onCellEnter}
             onClick={onCellClick}
             className={classNames("calculationRow__cell", {
-                ["calculationRow__cell_helper"]: rowType === "helper",
-                ["calculationRow__cell_result"]: rowType === "result",
-                ["calculationRow__cell_offset"]: isOffsetCell,
-                ["calculationRow__cell_paintMode"]: paintMode && rowType !== "helper",
-                ["calculationRow__cell_painted"]: isPainted && rowType !== "helper",
+                ["calculationRow__cell_helper"]: cellType === "helper",
+                ["calculationRow__cell_result"]: cellType === "result",
+                ["calculationRow__cell_offset"]: cellType === "offset",
+                ["calculationRow__cell_paintMode"]: paintMode && cellType !== "helper",
+                ["calculationRow__cell_painted"]: isPainted && cellType !== "helper",
             })}
         />
     );

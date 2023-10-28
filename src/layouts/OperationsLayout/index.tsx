@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import "./OperationsLayout.scss";
 import TemplateContainer from "../../components/TemplateContainer";
-import { TemplateOperationType, getTemplateSymbol } from "../../components/BasicCalculationTemplate";
+import {
+    TemplateOperationType,
+    getTemplateSymbol,
+} from "../../components/BasicCalculationTemplate";
 import Template from "../../components/Template";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { firebaseAnalytics } from "../../utils/firebase";
 import { logEvent } from "firebase/analytics";
 import Button from "../../components/Button";
+import { setActiveRowLength } from "../../store/actions/controllActions";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;
@@ -26,21 +30,21 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
             const template = getLastTempplate();
             setActiveTemplate(template);
             setActiveBasic(template.basics[0].id);
+            setActiveRowLength(template.basics[0].digitsInRow);
             setActiveCell(0);
         }
     }, [templates.length]);
 
     const onAddTemplate = () => {
-        logEvent(firebaseAnalytics, 'add_template', { operationType })
+        logEvent(firebaseAnalytics, "add_template", { operationType });
 
         return addNewTemplate(operationType);
-    }
+    };
 
     const onRemoveTemplate = (id: string) => {
         const template = templates.find((t) => t.id === id);
         !!template && removeTemplate(template);
-        logEvent(firebaseAnalytics, 'remove_template', { operationType })
-
+        logEvent(firebaseAnalytics, "remove_template", { operationType });
     };
 
     return (
@@ -52,7 +56,6 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
                 <Button
                     onClick={onAddTemplate}
                     aria-label="Добавить шаблон"
-                    //className="operations-layout__add-template"
                     title="Попробовать еще"
                 />
             </div>
