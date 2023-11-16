@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./ScaleSwitch.scss";
-import PaintIcon from "../../icons/PaintIcon";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { useActions } from "../../hooks/useActions";
-import classNames from "classnames";
 import ScaleMinusIcon from "../../icons/ScaleMinusIcon";
 import ScalePlusIcon from "../../icons/ScalePlusIcon";
+import IconButton from "../../ui/IconButton";
 
 const ScaleSwitch = () => {
     let zoom = 1;
@@ -20,25 +17,6 @@ const ScaleSwitch = () => {
     const decreaseScale = () => {
         zoom = zoom - 0.1;
         scalePage(zoom);
-    };
-    const [isPaintSelected, setIsPaintSelected] = useState(false);
-
-    const { paintMode } = useTypedSelector((state) => state.settings);
-    const { switchPaintMode } = useActions();
-
-    useEffect(() => {
-        if (paintMode) {
-            window.addEventListener("keyup", listenToEsc);
-            document.body.classList.add("paintMode");
-        }
-    }, [paintMode]);
-
-    const listenToEsc = (e: KeyboardEvent) => {
-        if (e.key === "Escape") {
-            switchPaintMode(false);
-            window.removeEventListener("keyup", listenToEsc);
-            document.body.classList.remove("paintMode");
-        }
     };
 
     const scalePage = (zoom: number) => {
@@ -55,20 +33,8 @@ const ScaleSwitch = () => {
     };
     return (
         <div className="scaleSwitch">
-            <button
-                className={classNames("paintButton", { ["paintButton_active"]: paintMode })}
-                onMouseLeave={() => setIsPaintSelected(false)}
-                onMouseEnter={() => setIsPaintSelected(true)}
-                onClick={() => switchPaintMode(true)}
-            >
-                <PaintIcon fill={isPaintSelected || paintMode ? "#ffffff" : "#333333"} />
-            </button>
-            <button aria-label="Уменьшить масштаб" onClick={increaseScale}>
-                <ScalePlusIcon />
-            </button>
-            <button aria-label="Увеличить масштаб" onClick={decreaseScale}>
-                <ScaleMinusIcon />
-            </button>
+            <IconButton onClick={increaseScale} ariaLabel="Увеличить масштаб" icon={<ScalePlusIcon />} popupText="Увеличить масштаб"/>
+            <IconButton onClick={decreaseScale} ariaLabel="Уменьшить масштаб" icon={<ScaleMinusIcon />} popupText="Уменьшить масштаб"/>
         </div>
     );
 };

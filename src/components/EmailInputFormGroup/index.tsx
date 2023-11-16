@@ -1,7 +1,7 @@
 import React from "react";
 import "./EmailInputFormGroup.scss";
-import Button from "../Button";
 import ErrorIcon from "../../icons/ErrorIcon";
+import Button from "../../ui/Button";
 
 interface IEmailInputFormGroupProps {
     onChange: (email: string) => void;

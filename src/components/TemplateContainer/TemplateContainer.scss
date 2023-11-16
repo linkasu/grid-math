@@ -1,6 +1,8 @@
 @import "../../styles/colors.scss";
+@import "../../styles/variables.scss";
 
 .template {
+    z-index: 8;
     &__container {
         box-sizing: border-box;
         position: relative;
@@ -17,25 +19,11 @@
         &_large {
             min-width: 50%;
         }
-    }
-
-    &__remove-button {
-        border-radius: 50%;
-        border: none;
-        background-color: $secondaryBlue;
-        transform: translateY(-100%);
-        width: 2.5rem;
-        height: 2.5rem;
-        &:hover {
-            cursor: pointer;
-            opacity: 70%;
-        }
-        &_hidden {
-            opacity: 0;
-            &:hover {
-                cursor: unset;
-                opacity: 0;
-            }
+        & > button {
+            border-radius: $circleRadius;
+            width: 2.5rem;
+            height: 2.5rem;
+            transform: translateY(-100%);
         }
     }
 }

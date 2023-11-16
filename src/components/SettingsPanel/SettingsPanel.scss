@@ -18,40 +18,14 @@
     }
 
     & > button {
-        border-radius: $radius;
-        background-color: $secondaryBlue;
-        color: $fontBlack;
-        border: none;
-        width: 3rem;
-        height: 3rem;
-        font-weight: 700;
-        font-size: 1rem;
         margin: 0 0 1rem;
         &:last-child {
             margin: 0;
         }
-        &:hover {
-            cursor: pointer;
-            opacity: 70%;
-        }
-    }
-    .paintButton {
-        background-color: #ffffff;
-        color: #333333;
-        border: 2px solid $secondaryBlue;
-        &:hover,
-        &:focus {
-            background-color: $primaryBlue;
-            color: #ffffff;
-            border-color: $primaryBlue;
-        }
-        &_active {
-            background-color: $primaryBlue;
-            color: #ffffff;
-            border-color: $primaryBlue;
-        }
     }
 }
 .paintMode {
-    cursor: url(../../assets/paint.png), auto;
+    .settings {
+        z-index: 7;
+    }
 }

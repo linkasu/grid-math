@@ -3,6 +3,7 @@ import classNames from "classnames";
 import "./TemplateContainer.scss";
 import { TemplateOperationType } from "../BasicCalculationTemplate";
 import DeleteIcon from "../../icons/DeleteIcon";
+import IconButton from "../../ui/IconButton";
 
 interface ITemplateContainerProps {
     templateElement: ReactElement;
@@ -24,15 +25,13 @@ const TemplateContainer = (props: ITemplateContainerProps) => {
             })}
         >
             {templateElement}
-            <button
-                aria-label="Удалить шаблон"
-                onClick={onClickRemove}
-                className={classNames("template__remove-button", {
-                    ["template__remove-button_hidden"]: !canRemoveTemplate,
-                })}
-            >
-                <DeleteIcon />
-            </button>
+            {canRemoveTemplate && (
+                <IconButton
+                    icon={<DeleteIcon />}
+                    ariaLabel="Удалить шаблон"
+                    onClick={onClickRemove}
+                />
+            )}
         </div>
     );
 };

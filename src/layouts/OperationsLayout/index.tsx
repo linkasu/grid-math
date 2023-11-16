@@ -10,8 +10,8 @@ import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { firebaseAnalytics } from "../../utils/firebase";
 import { logEvent } from "firebase/analytics";
-import Button from "../../components/Button";
 import { setActiveRowLength } from "../../store/actions/controllActions";
+import Button from "../../ui/Button";
 
 interface IOperationsLayoutProps {
     layoutTitle: string;

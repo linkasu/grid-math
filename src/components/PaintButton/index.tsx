@@ -3,9 +3,11 @@ import PaintIcon from "../../icons/PaintIcon";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import classNames from "classnames";
+import "./PaintButton.scss";
+import IconButton from "../../ui/IconButton";
 
 const PaintButton = () => {
-    const [isPaintSelected, setIsPaintSelected] = useState(false);
+    const [isButtonHovered, setIsButtonHovered] = useState(false);
 
     const { paintMode } = useTypedSelector((state) => state.settings);
     const { switchPaintMode } = useActions();
@@ -19,20 +21,32 @@ const PaintButton = () => {
 
     const listenToEsc = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
-            switchPaintMode(false);
-            window.removeEventListener("keyup", listenToEsc);
-            document.body.classList.remove("paintMode");
+            turnOffPaintMode();
         }
     };
+    const turnOffPaintMode = () => {
+        switchPaintMode(false);
+        window.removeEventListener("keyup", listenToEsc);
+        document.body.classList.remove("paintMode");
+    };
+
     return (
-        <button
-            className={classNames("paintButton", { ["paintButton_active"]: paintMode })}
-            onMouseLeave={() => setIsPaintSelected(false)}
-            onMouseEnter={() => setIsPaintSelected(true)}
-            onClick={() => switchPaintMode(true)}
-        >
-            <PaintIcon fill={isPaintSelected || paintMode ? "#ffffff" : "#333333"} />
-        </button>
+        <>
+            {paintMode && (
+                <div className="paintButton__background" onClick={turnOffPaintMode}></div>
+            )}
+            <IconButton
+                icon={<PaintIcon fill={isButtonHovered || paintMode ? "#ffffff" : "#333333"} />}
+                onClick={() => switchPaintMode(true)}
+                ariaLabel="Режим окрашивания"
+                popupText="Клетки можно закрашивать"
+                buttonClassNames={classNames("paintButton", {
+                    ["paintButton_active"]: paintMode,
+                })}
+                onMouseLeave={() => setIsButtonHovered(false)}
+                onMouseEnter={() => setIsButtonHovered(true)}
+            />
+        </>
     );
 };
 

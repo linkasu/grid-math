@@ -1,0 +1,50 @@
+@import "../../styles/colors.scss";
+@import "../../styles/variables.scss";
+
+.paintButton {
+    background-color: #ffffff;
+    color: #333333;
+    border: 2px solid $secondaryBlue;
+    position: relative;
+    &:hover,
+    &:focus {
+        background-color: $primaryBlue;
+        color: #ffffff;
+        border-color: $primaryBlue;
+    }
+    &_active {
+        background-color: $primaryBlue;
+        color: #ffffff;
+        border-color: $primaryBlue;
+    }
+    &__background {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    &__popup {
+        position: absolute;
+        top: 50%;
+        left: -2rem;
+        transform: translate(-100%, -50%);
+        box-shadow: 0px 3px 4px $secondaryBlue;
+        padding: 0.5rem;
+        background-color: $backgroundLight;
+        color: $fontBlack;
+        text-align: start;
+        text-wrap: nowrap;
+        font-size: 0.75rem;
+        opacity: 1;
+        border-radius: $radius;
+        display: none;
+        &_visible {
+            display: block;
+        }
+    }
+}
+
+.paintMode {
+    cursor: url(../../assets/paint.png), auto;
+}
