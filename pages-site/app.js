@@ -63,6 +63,21 @@ function pickAsset(assets, matcher) {
     return assets.find((asset) => matcher.test(asset.name));
 }
 
+function pickMacAsset(assets) {
+    const isArmMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform) && /arm|aarch64/i.test(navigator.userAgent);
+    if (isArmMac) {
+        return pickAsset(assets, /mac-arm64\.dmg$/i) || pickAsset(assets, /\.dmg$/i);
+    }
+    return pickAsset(assets, /mac-x64\.dmg$/i) || pickAsset(assets, /\.dmg$/i);
+}
+
+function pickWindowsAsset(assets) {
+    return (
+        pickAsset(assets, /win-(x64|ia32|arm64)\.exe$/i) ||
+        assets.find((asset) => /\.exe$/i.test(asset.name) && !/^elevate\.exe$/i.test(asset.name))
+    );
+}
+
 async function loadLatestRelease() {
     const { owner, repo } = detectRepository();
     const releaseUrl = `https://github.com/${owner}/${repo}/releases`;
@@ -91,8 +106,8 @@ async function loadLatestRelease() {
         document.getElementById("release-tag").textContent = release.tag_name || "без тега";
         document.getElementById("release-date").textContent = publishedDate;
 
-        attachAsset("download-mac", "meta-mac", pickAsset(assets, /\.dmg$/i));
-        attachAsset("download-win", "meta-win", pickAsset(assets, /\.exe$/i));
+        attachAsset("download-mac", "meta-mac", pickMacAsset(assets));
+        attachAsset("download-win", "meta-win", pickWindowsAsset(assets));
         attachAsset(
             "download-appimage",
             "meta-appimage",
