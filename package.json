@@ -8,7 +8,7 @@
         "start": "webpack-dev-server --open",
         "build:web": "webpack --mode production",
         "build": "npm run build:web",
-        "dist:mac": "npm run build:web && electron-builder --mac dmg --publish never",
+        "dist:mac": "npm run build:web && electron-builder --mac dmg --arm64 --x64 --publish never",
         "dist:win": "npm run build:web && electron-builder --win nsis --publish never",
         "dist:linux": "npm run build:web && electron-builder --linux AppImage deb --publish never"
     },

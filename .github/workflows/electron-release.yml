@@ -63,7 +63,12 @@ jobs:
                   APPLE_ID: ${{ secrets.APPLE_ID }}
                   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
                   APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-              run: npm run "${{ matrix.dist_command }}"
+              run: |
+                  if [ "${{ runner.os }}" = "Windows" ]; then
+                    export CSC_IDENTITY_AUTO_DISCOVERY=false
+                    unset CSC_LINK CSC_KEY_PASSWORD WIN_CSC_LINK WIN_CSC_KEY_PASSWORD
+                  fi
+                  npm run "${{ matrix.dist_command }}"
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
