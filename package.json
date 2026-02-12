@@ -69,22 +69,26 @@
         "directories": {
             "output": "release"
         },
+        "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
         "files": [
             "build/**/*",
             "electron/**/*",
             "package.json"
         ],
         "mac": {
+            "icon": "assets-icons/icon.icns",
             "target": [
                 "dmg"
             ]
         },
         "win": {
+            "icon": "assets-icons/icon.ico",
             "target": [
                 "nsis"
             ]
         },
         "linux": {
+            "icon": "assets-icons/icon.png",
             "target": [
                 "AppImage",
                 "deb"
