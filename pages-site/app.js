@@ -1,4 +1,4 @@
-const FALLBACK_OWNER = "aacidov";
+const FALLBACK_OWNER = "linkasu";
 const FALLBACK_REPO = "grid-math";
 
 function detectRepository() {
