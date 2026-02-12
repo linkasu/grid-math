@@ -24,7 +24,10 @@
         "ts",
         "tsx"
     ],
-    "author": "",
+    "author": {
+        "name": "Ivan Bakaidov",
+        "email": "ibakaidov@ya.ru"
+    },
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.22.17",
@@ -77,6 +80,9 @@
         ],
         "mac": {
             "icon": "assets-icons/icon.icns",
+            "notarize": {
+                "teamId": "29HEQ626X2"
+            },
             "hardenedRuntime": true,
             "entitlements": "electron/entitlements.mac.plist",
             "entitlementsInherit": "electron/entitlements.mac.plist",
