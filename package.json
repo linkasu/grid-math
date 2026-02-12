@@ -2,11 +2,15 @@
     "name": "gridmath",
     "version": "1.0.0",
     "description": "Table board for math calculations",
-    "main": "index.js",
+    "main": "electron/main.cjs",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "webpack-dev-server --open",
-        "build": "webpack build"
+        "build:web": "webpack --mode production",
+        "build": "npm run build:web",
+        "dist:mac": "npm run build:web && electron-builder --mac dmg --publish never",
+        "dist:win": "npm run build:web && electron-builder --win nsis --publish never",
+        "dist:linux": "npm run build:web && electron-builder --linux AppImage deb --publish never"
     },
     "keywords": [
         "react",
@@ -29,10 +33,11 @@
         "@babel/preset-typescript": "^7.22.15",
         "@types/react": "^18.2.21",
         "@types/react-dom": "^18.2.7",
-        "@types/validator": "^13.11.5",
         "babel-loader": "^9.1.3",
         "clean-webpack-plugin": "^4.0.0",
         "css-loader": "^6.8.1",
+        "electron": "^31.7.7",
+        "electron-builder": "^24.13.3",
         "file-loader": "^6.2.0",
         "html-webpack-plugin": "^5.5.3",
         "sass": "^1.66.1",
@@ -51,14 +56,39 @@
         "@types/react-redux": "^7.1.27",
         "bootstrap": "^5.3.2",
         "classnames": "^2.3.2",
-        "email-validator": "^2.0.4",
-        "firebase": "^10.5.0",
         "i": "^0.3.7",
         "npm": "^10.2.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-firebase-hooks": "^5.1.1",
         "react-redux": "^8.1.3",
         "redux": "^4.2.1"
+    },
+    "build": {
+        "appId": "su.linka.gridmath",
+        "productName": "GridMath",
+        "directories": {
+            "output": "release"
+        },
+        "files": [
+            "build/**/*",
+            "electron/**/*",
+            "package.json"
+        ],
+        "mac": {
+            "target": [
+                "dmg"
+            ]
+        },
+        "win": {
+            "target": [
+                "nsis"
+            ]
+        },
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb"
+            ]
+        }
     }
 }

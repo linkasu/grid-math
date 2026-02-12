@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GridMath - Скачать приложение</title>
+        <meta
+            name="description"
+            content="Скачайте последнюю desktop-версию GridMath для macOS, Windows и Linux."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./styles.css" />
+    </head>
+    <body>
+        <div class="background-shape background-shape-left"></div>
+        <div class="background-shape background-shape-right"></div>
+        <main class="page">
+            <section class="hero reveal">
+                <p class="hero__eyebrow">GridMath Desktop</p>
+                <h1>Скачайте последнюю версию</h1>
+                <p class="hero__subtitle">
+                    Локальное приложение для тренировки вычислений. Выберите платформу и
+                    установите за пару минут.
+                </p>
+                <div class="release-meta">
+                    <span>Релиз: <strong id="release-tag">загрузка...</strong></span>
+                    <span>Дата: <strong id="release-date">загрузка...</strong></span>
+                </div>
+            </section>
+
+            <section class="downloads reveal">
+                <h2>Файлы установки</h2>
+                <div class="cards">
+                    <a
+                        class="download-card"
+                        id="download-mac"
+                        data-platform="macOS"
+                        aria-disabled="true"
+                    >
+                        <span class="download-card__title">macOS (.dmg)</span>
+                        <span class="download-card__meta" id="meta-mac">проверка файла...</span>
+                    </a>
+                    <a
+                        class="download-card"
+                        id="download-win"
+                        data-platform="Windows"
+                        aria-disabled="true"
+                    >
+                        <span class="download-card__title">Windows (.exe)</span>
+                        <span class="download-card__meta" id="meta-win">проверка файла...</span>
+                    </a>
+                    <a
+                        class="download-card"
+                        id="download-appimage"
+                        data-platform="Linux AppImage"
+                        aria-disabled="true"
+                    >
+                        <span class="download-card__title">Linux (.AppImage)</span>
+                        <span class="download-card__meta" id="meta-appimage"
+                            >проверка файла...</span
+                        >
+                    </a>
+                    <a
+                        class="download-card"
+                        id="download-deb"
+                        data-platform="Linux DEB"
+                        aria-disabled="true"
+                    >
+                        <span class="download-card__title">Linux (.deb)</span>
+                        <span class="download-card__meta" id="meta-deb">проверка файла...</span>
+                    </a>
+                </div>
+                <p class="downloads__status" id="status-message"></p>
+            </section>
+
+            <section class="info reveal">
+                <h2>Проверка файла</h2>
+                <p>
+                    Рекомендуется сверять размер и имя установщика перед запуском. Все файлы
+                    публикуются в официальном GitHub Release проекта.
+                </p>
+            </section>
+
+            <section class="support reveal">
+                <h2>Проблемы с загрузкой?</h2>
+                <p>
+                    Откройте список релизов напрямую:
+                    <a id="releases-link" href="#" target="_blank" rel="noopener noreferrer"
+                        >GitHub Releases</a
+                    >
+                </p>
+            </section>
+        </main>
+        <script src="./app.js"></script>
+    </body>
+</html>

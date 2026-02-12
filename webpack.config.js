@@ -2,16 +2,16 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
-    mode: "development",
+module.exports = (_, argv) => ({
+    mode: argv.mode || "development",
     entry: ["@babel/polyfill", "./src/index.tsx"],
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
     },
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "[name].[hash].js",
-        assetModuleFilename: "assets/[name].[ext]"
+        filename: "[name].[fullhash].js",
+        assetModuleFilename: "assets/[name].[ext]",
     },
     devServer: {
         port: 3000,
@@ -54,4 +54,4 @@ module.exports = {
             },
         ],
     },
-};
+});

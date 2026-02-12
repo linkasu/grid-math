@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./MainPageLayout.scss";
 import OperationsLayout from "../OperationsLayout";
 import { TemplateOperationType } from "../../components/BasicCalculationTemplate";
-import AuthLayout from "../AuthLayout";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { isSignInWithEmailLink, signInWithEmailLink } from "@firebase/auth";
-import { auth } from "../../utils/firebase";
 import SettingsPanel from "../../components/SettingsPanel";
 
 export type Operation = {
@@ -33,30 +29,6 @@ const operations: Operation[] = [
 ];
 
 const MainPageLayout = () => {
-    const [user, loading] = useAuthState(auth);
-    const signedWithLink = isSignInWithEmailLink(auth, window.location.href);
-    const [authLoading, setAuthLoading] = useState(false);
-    useEffect(() => {
-        checkAuth();
-    }, [user, signedWithLink]);
-    const checkAuth = () => {
-        if (!user && signedWithLink) {
-            setAuthLoading(true);
-            let email = localStorage.getItem("email");
-            if (!email) {
-                email = window.prompt("Пожалуйста, введите почту для подтверждения");
-            }
-            if (email) {
-                signInWithEmailLink(auth, email, window.location.href)
-                    .then(() => {
-                        localStorage.removeItem("email");
-                    })
-                    .catch((e) => console.log(e))
-                    .finally(() => setAuthLoading(false));
-            }
-        }
-    };
-
     return (
         <div className="relative-background">
             <SettingsPanel />
@@ -70,7 +42,6 @@ const MainPageLayout = () => {
                     </section>
                 ))}
             </div>
-            {!user && !loading && !authLoading && <AuthLayout />}
         </div>
     );
 };

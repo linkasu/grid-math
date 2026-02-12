@@ -8,8 +8,6 @@ import {
 import Template from "../../components/Template";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { firebaseAnalytics } from "../../utils/firebase";
-import { logEvent } from "firebase/analytics";
 import { setActiveRowLength } from "../../store/actions/controllActions";
 import Button from "../../ui/Button";
 
@@ -36,15 +34,12 @@ const OperationsLayout = (props: IOperationsLayoutProps) => {
     }, [templates.length]);
 
     const onAddTemplate = () => {
-        logEvent(firebaseAnalytics, "add_template", { operationType });
-
         return addNewTemplate(operationType);
     };
 
     const onRemoveTemplate = (id: string) => {
         const template = templates.find((t) => t.id === id);
         !!template && removeTemplate(template);
-        logEvent(firebaseAnalytics, "remove_template", { operationType });
     };
 
     return (
