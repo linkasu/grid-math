@@ -36,6 +36,23 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
+            - name: Validate Apple signing secrets
+              if: runner.os == 'macOS'
+              shell: bash
+              env:
+                  CSC_LINK: ${{ secrets.CSC_LINK }}
+                  CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+                  APPLE_ID: ${{ secrets.APPLE_ID }}
+                  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+                  APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+              run: |
+                  for var_name in CSC_LINK CSC_KEY_PASSWORD APPLE_ID APPLE_APP_SPECIFIC_PASSWORD APPLE_TEAM_ID; do
+                    if [ -z "${!var_name}" ]; then
+                      echo "Missing required secret: ${var_name}" >&2
+                      exit 1
+                    fi
+                  done
+
             - name: Build distributive
               shell: bash
               env:
@@ -46,11 +63,7 @@ jobs:
                   APPLE_ID: ${{ secrets.APPLE_ID }}
                   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
                   APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-              run: |
-                  if [ -z "${CSC_LINK}" ] && [ -z "${WIN_CSC_LINK}" ]; then
-                    export CSC_IDENTITY_AUTO_DISCOVERY=false
-                  fi
-                  npm run "${{ matrix.dist_command }}"
+              run: npm run "${{ matrix.dist_command }}"
 
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
